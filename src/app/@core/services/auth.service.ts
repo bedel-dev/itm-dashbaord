@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { throwError, of } from 'rxjs';
 import { User } from 'src/app/@shared/models/user';
+import { GlobalConstants } from 'src/app/common/global-constants';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const USERS = [
   {
@@ -34,17 +36,19 @@ const USERS = [
 
 @Injectable()
 export class AuthService {
-  constructor() {}
+  constructor(private http: HttpClient,) {}
 
   login(account: string, password: string) {
-    for (let i = 0; i < USERS.length; i++) {
-      if (account === USERS[i].account && password === USERS[i].password) {
-        let { userName, gender, phoneNumber, email } = USERS[i];
-        let userInfo: User = { userName, gender, phoneNumber, email };
-        return of(userInfo);
-      }
+    var body= {
+        "username":account,
+        "pass":password
     }
-    return throwError('Please make sure you have input correct account and password');
+    var connexion = this.http.post(GlobalConstants.apiURL+'users/login.php',body);
+    if(connexion){
+      return connexion;
+    }else{
+      return throwError('Please make sure you have input correct account and password');
+    }
   }
 
   logout() {
@@ -53,7 +57,7 @@ export class AuthService {
     localStorage.removeItem('userinfo');
   }
 
-  setSession(userInfo: User) {
+  setSession(userInfo: any) {
     localStorage.setItem('id_token', '123456');
     localStorage.setItem('userinfo', JSON.stringify(userInfo));
     localStorage.setItem('expires_at', '120');

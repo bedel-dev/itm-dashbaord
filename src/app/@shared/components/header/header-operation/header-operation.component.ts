@@ -12,11 +12,11 @@ import { I18nService } from 'ng-devui/i18n';
   styleUrls: ['./header-operation.component.scss'],
 })
 export class HeaderOperationComponent implements OnInit {
-  user: User;
+  user!: User;
   languages = LANGUAGES;
-  language: string;
+  language!: string;
   haveLoggedIn = false;
-  noticeCount: number;
+  noticeCount!: number;
 
   constructor(private route: Router, private authService: AuthService, private translate: TranslateService, private i18n: I18nService) {}
 
@@ -25,11 +25,13 @@ export class HeaderOperationComponent implements OnInit {
       this.user = JSON.parse(localStorage.getItem('userinfo')!);
       this.haveLoggedIn = true;
     } else {
-      this.authService.login('Admin', 'Devui.admin').subscribe((res) => {
-        this.authService.setSession(res);
-        this.user = JSON.parse(localStorage.getItem('userinfo')!);
-        this.haveLoggedIn = true;
-      });
+      this.authService.logout();
+      this.route.navigate(['/', 'login']);
+      // this.authService.login('Admin', 'Devui.admin').subscribe((res) => {
+      //   this.authService.setSession(res);
+      //   this.user = JSON.parse(localStorage.getItem('userinfo')!);
+      //   this.haveLoggedIn = true;
+      // });
     }
     this.language = this.translate.currentLang;
   }

@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
   i18nValues: any;
   toastMessage: any;
   languages = LANGUAGES;
-
+  username: any;
+  password: any;
   formData = {
     userAccount: 'Admin',
     userAccountPassword: 'DevUI.admin',
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
     usernameRules: {
       validators: [
         { required: true },
-        { minlength: 3 },
+        { minlength: 4 },
         { maxlength: 20 },
         {
           pattern: /^[a-zA-Z0-9]+(\s+[a-zA-Z0-9]+)*$/,
@@ -54,10 +55,11 @@ export class LoginComponent implements OnInit {
       validators: [{ required: true }, { email: true }],
     },
     passwordRules: {
-      validators: [{ required: true }, { minlength: 6 }, { maxlength: 15 }, { pattern: /^[a-zA-Z0-9\d@$!%*?&.]+(\s+[a-zA-Z0-9]+)*$/ }],
+      validators: [{ required: true }, { minlength: 4 }, { maxlength: 15 }, { pattern: /^[a-zA-Z0-9\d@$!%*?&.]+(\s+[a-zA-Z0-9]+)*$/ }],
       message: 'Enter a password that contains 6 to 15 digits and letters.',
     },
   };
+
 
   @HostListener('window:keydown.enter')
   onEnter() {
@@ -81,7 +83,7 @@ export class LoginComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         console.log(res);
-        // this.i18nValues = this.translate.instant('loginPage');
+         this.i18nValues = this.translate.instant('loginPage');
          this.updateTabItems(res);
       });
 
@@ -107,14 +109,28 @@ export class LoginComponent implements OnInit {
   }
 
   onClick(tabId: string | number) {
+    // console.log(this.username,this.password)
     switch (tabId) {
       case 'tab1':
-        this.authService.login(this.formData.userAccount, this.formData.userAccountPassword).subscribe(
-          (res) => {
-            this.authService.setSession(res);
+        this.authService.login(this.username, this.password).subscribe(
+
+          (res:any) => {
+            console.log(res)
+            if(res.response.statutCode == 404){
+              this.toastMessage = [
+                {
+                  severity: 'error',
+                  // summary: "nom d'utilisateur",
+                  content: "Veuillez entrez le bon mot de passe ou nom d'utilisateur",
+                },
+              ];
+            }else{
+            this.authService.setSession(res.response.data);
             this.router.navigate(['/']);
+            }
           },
           (error) => {
+            console.log(error)
             this.toastMessage = [
               {
                 severity: 'error',
@@ -128,8 +144,8 @@ export class LoginComponent implements OnInit {
       case 'tab2':
         this.authService.login(this.formData.userEmail, this.formData.userEmailPassword).subscribe(
           (res) => {
-            this.authService.setSession(res);
-            this.router.navigate(['/']);
+            // this.authService.setSession(res);
+            // this.router.navigate(['/']);
           },
           (error) => {
             this.toastMessage = [

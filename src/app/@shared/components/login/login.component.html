@@ -3,31 +3,31 @@
   style="background-image: url('assets/img/background/img_log.png'); background-repeat: no-repeat; background-position: center"
 >
   <d-toast [value]="toastMessage"></d-toast>
-  <div class="da-login-form">
+  <div class="da-login-form"  style="margin-top: 10%; width: 40%;">
     <div class="da-login-logo-wrapper" style="margin-bottom: 25px;" >
       <div class="da-login-logo">
         <span class="da-logo-devui">
           <img src="assets/llogo.png" alt="DevUI-Logo" />
         </span>
-        <span class="da-text">Itm Admin</span>
+        <span class="da-text"  style="color:#07539e" >Itm Admin</span>
       </div>
         <!--<span class="da-coperation">{{ 'loginPage.coperation' | translate }}</span> -->
     </div>
     <div class="da-login-ways">
-      <d-tabs [(activeTab)]="tabActiveId" type="pills">
-        <d-tab *ngFor="let item of tabItems" [id]="item.id">
+      <!--  <d-tabs [(activeTab)]="tabActiveId" type="pills">
+      <d-tab *ngFor="let item of tabItems" [id]="item.id">
           <ng-template dTabTitle>
-            <span  style="font-size: 34px;"  class="da-tabs-title">
+              <a style="font-size: 34px;"  class="da-tabs-title">
               {{ item.title }}
-            </span>
+            </a>
           </ng-template>
         </d-tab>
-      </d-tabs>
+      </d-tabs>-->
       <ng-container *ngIf="tabActiveId === 'tab1'; else loginWithEmail">
         <ng-template [ngTemplateOutlet]="loginWithPassword"></ng-template>
       </ng-container>
     </div>
-    <div class="da-other">
+    <!--<div class="da-other">
       <span class="devui-form-span">{{ 'loginPage.other' | translate }}:</span>
       <i (click)="handleAuth('github')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" height="20px">
@@ -36,8 +36,8 @@
           />
         </svg>
       </i>
-      <a routerLink="/register">{{ 'loginPage.register' | translate }}</a>
-    </div>
+     <a routerLink="/register">{{ 'loginPage.register' | translate }}</a>
+    </div>-->
   </div>
 
   <div class="da-language-wrapper" dDropDown [trigger]="'hover'" dDropDownToggle appendToBody>
@@ -64,54 +64,59 @@
     </ul>
   </div>
 
-  <da-footer></da-footer>
+  <!--<da-footer></da-footer>-->
 </div>
 
 <ng-template #loginWithPassword>
   <form dForm [layout]="horizontalLayout" [labelSize]="'sm'" ngForm (dSubmit)="onClick(tabActiveId)">
     <d-form-item>
-      <d-form-label>{{ 'loginPage.userName' | translate }}：</d-form-label>
+      <d-form-label style="flex: 0 0 124px;">Nom d'utilisateur</d-form-label>
       <d-form-control>
         <div>
           <input
             dTextInput
             autocomplete="off"
             name="userName"
-            placeholder="Admin or User"
-            [(ngModel)]="formData.userAccount"
+            placeholder="nom d'utilisateur"
+            [(ngModel)]="username"
             [dValidateRules]="formRules.usernameRules"
           />
         </div>
       </d-form-control>
     </d-form-item>
     <d-form-item>
-      <d-form-label>{{ 'loginPage.password' | translate }}：</d-form-label>
+      <d-form-label style="flex: 0 0 124px;">Mot de passe</d-form-label>
       <d-form-control [suffixTemplate]="suffixTemplate">
         <input
           dTextInput
           name="password"
           [type]="showPassword ? 'text' : 'password'"
-          placeholder="DevUI.admin"
-          [(ngModel)]="formData.userAccountPassword"
+          placeholder="Not de passe"
+          [(ngModel)]="password"
           (keyup)="onKeyUp($event, tabActiveId)"
           [dValidateRules]="formRules.passwordRules"
         />
       </d-form-control>
     </d-form-item>
     <div class="da-login-options">
-      <div class="da-auto-login">
+      <!--
+        <div class="da-auto-login">
         <d-toggle [checked]="true"></d-toggle>
         <span class="da-auto-login-text" style="margin-left: 8px">{{ 'loginPage.autoLogin' | translate }}</span>
       </div>
-      <span
-        ><a href="#">{{ 'loginPage.forgetPassword' | translate }}</a></span
-      >
+      -->
+      <span><a href="#">Mot de Passe oublié</a></span>
     </div>
-    <button class="da-submit-button" dFormSubmit>
-      {{ 'loginPage.submit' | translate }}
+    <button style="background-color:#07539e;"  class="da-submit-button" dFormSubmit>
+      Connexion
     </button>
   </form>
 </ng-template>
+
+
+
+
+
 <ng-template #loginWithEmail>
   <form dForm [layout]="horizontalLayout" [labelSize]="'sm'" ngForm (dSubmit)="onClick(tabActiveId)">
     <d-form-item>
