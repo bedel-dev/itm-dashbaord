@@ -108,5 +108,8 @@
       }
     }
   },
-  "defaultProject": "devui-admin"
+  "defaultProject": "devui-admin",
+  "cli": {
+    "analytics": "0b24f806-65af-44e4-8050-63bea327a09e"
+  }
 }
