@@ -13,7 +13,7 @@ import {
 const customTheme = new Theme({
   id: `customize-theme`,
   name: 'custom',
-  cnName: '自定义',
+  cnName: 'Itm admin',
   data: {},
   isDark: false,
 });

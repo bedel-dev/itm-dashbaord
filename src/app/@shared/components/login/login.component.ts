@@ -80,8 +80,9 @@ export class LoginComponent implements OnInit {
       .get('loginPage')
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
-        this.i18nValues = this.translate.instant('loginPage');
-        this.updateTabItems(res);
+        console.log(res);
+        // this.i18nValues = this.translate.instant('loginPage');
+         this.updateTabItems(res);
       });
 
     this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event: TranslationChangeEvent) => {
@@ -154,15 +155,17 @@ export class LoginComponent implements OnInit {
   }
 
   updateTabItems(values: any) {
+
+    values['loginWays']['account'] = "Connexion"
     this.tabItems = [
       {
         id: 'tab1',
         title: values['loginWays']['account'],
       },
-      {
-        id: 'tab2',
-        title: values['loginWays']['email'],
-      },
+      // {
+      //   id: 'tab2',
+      //   title: values['loginWays']['email'],
+      // },
     ];
   }
 

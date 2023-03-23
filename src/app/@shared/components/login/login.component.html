@@ -4,20 +4,20 @@
 >
   <d-toast [value]="toastMessage"></d-toast>
   <div class="da-login-form">
-    <div class="da-login-logo-wrapper">
+    <div class="da-login-logo-wrapper" style="margin-bottom: 25px;" >
       <div class="da-login-logo">
         <span class="da-logo-devui">
-          <img src="assets/devui-logo.svg" alt="DevUI-Logo" />
+          <img src="assets/llogo.png" alt="DevUI-Logo" />
         </span>
-        <span class="da-text">DevUI</span>
+        <span class="da-text">Itm Admin</span>
       </div>
-      <span class="da-coperation">{{ 'loginPage.coperation' | translate }}</span>
+        <!--<span class="da-coperation">{{ 'loginPage.coperation' | translate }}</span> -->
     </div>
     <div class="da-login-ways">
       <d-tabs [(activeTab)]="tabActiveId" type="pills">
         <d-tab *ngFor="let item of tabItems" [id]="item.id">
           <ng-template dTabTitle>
-            <span class="da-tabs-title">
+            <span  style="font-size: 34px;"  class="da-tabs-title">
               {{ item.title }}
             </span>
           </ng-template>
