@@ -134,8 +134,8 @@ export class LoginComponent implements OnInit {
             this.toastMessage = [
               {
                 severity: 'error',
-                summary: this.i18nValues['noticeMessage']['summary'],
-                content: this.i18nValues['noticeMessage']['accountContent'],
+                summary: 'error',
+                content: 'networking error',
               },
             ];
           }

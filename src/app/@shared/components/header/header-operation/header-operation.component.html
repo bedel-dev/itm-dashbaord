@@ -1,8 +1,8 @@
 <div class="da-operations">
-  <d-search class="da-header-search" [iconPosition]="'left'" [noBorder]="true" (searchFn)="onSearch($event)"></d-search>
-  <a href="https://devui.design/admin-page/docs" target="_blank">
+  <!--<d-search class="da-header-search" [iconPosition]="'left'" [noBorder]="true" (searchFn)="onSearch($event)"></d-search>-->
+  <!--<a href="https://devui.design/admin-page/docs" target="_blank">
     <i class="icon icon-helping"></i>
-  </a>
+  </a>-->
   <div class="da-operations-notice" dDropDown [trigger]="'click'" dDropDownToggle appendToBody [closeScope]="'blank'">
     <d-badge [count]="noticeCount">
       <i class="icon icon-notice"></i>
@@ -13,14 +13,16 @@
   </div>
 
   <div class="da-operations-user" dDropDown [trigger]="'hover'" appendToBody dDropDownToggle>
-    <d-avatar [name]="user.userName" [width]="22" [height]="22"></d-avatar>
-    <span class="da-user-name">{{ user?.userName }}</span>
+    <d-avatar [name]="user.username" [width]="22" [height]="22"></d-avatar>
+    <span class="da-user-name">{{ user?.username}}</span>
     <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu" style="min-width: 120px">
       <ng-container *ngIf="haveLoggedIn; else login">
         <li role="menuitem">
-          <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'center']"
-            ><i class="icon icon-mine"></i>{{ 'header.userCenter' | translate }}</a
-          >
+          <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'center']">
+            <i class="icon icon-mine">
+            </i>
+            {{user.nomprenom}}
+          </a>
         </li>
         <li role="menuitem">
           <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'settings']"

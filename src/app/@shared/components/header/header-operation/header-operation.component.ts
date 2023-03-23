@@ -12,7 +12,7 @@ import { I18nService } from 'ng-devui/i18n';
   styleUrls: ['./header-operation.component.scss'],
 })
 export class HeaderOperationComponent implements OnInit {
-  user!: User;
+  user!: any;
   languages = LANGUAGES;
   language!: string;
   haveLoggedIn = false;
