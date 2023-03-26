@@ -43,6 +43,28 @@ export default function (values: any) {
       menuIcon: 'icon icon-modify',
     },
     {
+      title: values['gestion_user']['title'],
+      children: [
+        {
+          title: values['gestion_user']['seealldata'],
+          link: '/pages/gestionuser/advanced-form',
+        },
+      ],
+      link: '/pages/gestionuser',
+      menuIcon: 'icon icon-modify',
+    },
+    {
+      title: values['gestion_mail']['title'],
+      children: [
+        {
+          title: values['gestion_mail']['seealldata'],
+          link: '/pages/mailgestion/advanced-form',
+        },
+      ],
+      link: '/pages/mailgestion',
+      menuIcon: 'icon icon-table',
+    },
+    {
       title: values['list']['title'],
       children: [
         { title: values['list']['basicList'], link: '/pages/list/basic' },
@@ -57,24 +79,24 @@ export default function (values: any) {
       link: '/pages/list',
       menuIcon: 'icon icon-table',
     },
-    {
-      title: values['abnormal']['title'],
-      children: [
-        { title: '403', link: '/pages/abnormal/abnormal403' },
-        { title: '404', link: '/pages/abnormal/abnormal404' },
-        { title: '500', link: '/pages/abnormal/abnormal500' },
-      ],
-      link: '/pages/abnormal',
-      menuIcon: 'icon icon-unload',
-    },
-    {
-      title: values['user']['title'],
-      children: [
-        { title: values['user']['center'], link: '/pages/user/center' },
-        { title: values['user']['settings'], link: '/pages/user/settings' },
-      ],
-      link: '/pages/user',
-      menuIcon: 'icon icon-mine',
-    },
+    // {
+    //   title: values['abnormal']['title'],
+    //   children: [
+    //     { title: '403', link: '/pages/abnormal/abnormal403' },
+    //     { title: '404', link: '/pages/abnormal/abnormal404' },
+    //     { title: '500', link: '/pages/abnormal/abnormal500' },
+    //   ],
+    //   link: '/pages/abnormal',
+    //   menuIcon: 'icon icon-unload',
+    // },
+    // {
+    //   title: values['user']['title'],
+    //   children: [
+    //     { title: values['user']['center'], link: '/pages/user/center' },
+    //     { title: values['user']['settings'], link: '/pages/user/settings' },
+    //   ],
+    //   link: '/pages/user',
+    //   menuIcon: 'icon icon-mine',
+    // },
   ];
 }

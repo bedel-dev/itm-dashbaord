@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { SideMenuComponent } from '../@shared/components/side-menu/side-menu.component';
 import { Theme } from 'ng-devui/theme';
 
+
 @Component({
   selector: 'da-pages',
   templateUrl: './pages.component.html',
@@ -93,6 +94,7 @@ export class PagesComponent implements OnInit {
 
   updateMenu(values: any) {
     this.menu = getMenu(values);
+
   }
 
   openSideMenuDrawer() {

@@ -23,7 +23,7 @@ export class DynamicFormsComponent implements OnInit {
   @Input() layout = FormLayout.Horizontal;
   @Input() labelSize: 'sm' | '' | 'lg' = '';
   @Input() labelAlign: 'start' | 'center' | 'end' = 'start';
-  @Input() formRules: DValidateRules;
+  @Input() formRules!: DValidateRules;
   @Input() showLoading = true;
   @Input() formSubmitData: any;
   @Input() showSubmitBtn: boolean = true;

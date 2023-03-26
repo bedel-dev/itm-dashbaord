@@ -20,6 +20,16 @@ const routes: Routes = [
           import('./form/form.module').then((m) => m.FormModule),
       },
       {
+        path: 'gestionuser',
+        loadChildren: () =>
+          import('./usergestion/usergestion.module').then((m) => m.UsergestionModule),
+      },
+      {
+        path: 'mailgestion',
+        loadChildren: () =>
+          import('./mailgestion/usergestion.module').then((m) => m.MailgestionModule),
+      },
+      {
         path: 'list',
         loadChildren: () =>
           import('./list/list.module').then((m) => m.ListModule),

@@ -2,9 +2,16 @@ import { Injectable } from '@angular/core';
 import { Observable, of as observableOf } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { Item, ListData, Card, ListPager } from '../data/listData';
+import { GlobalConstants } from 'src/app/common/global-constants';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
+@Injectable({
+  providedIn: 'root'
+})
 @Injectable()
-export class ListDataService extends ListData {
+export class ListDataService  {
+  constructor(public http:HttpClient,) { }
+
   private basicData: Item[] = [
     {
       id: '230000200706283786',
@@ -514,15 +521,62 @@ export class ListDataService extends ListData {
     },
   ];
 
-  private pagerList(data: Item[] | Card[], pager: ListPager) {
+  public pagerList(data:any[], pager: ListPager) {
+    // console.log(data.slice(pager.pageSize! * (pager.pageIndex! - 1), pager.pageSize! * pager.pageIndex!));
+
     return data.slice(pager.pageSize! * (pager.pageIndex! - 1), pager.pageSize! * pager.pageIndex!);
   }
 
   getListData(pager: ListPager): Observable<any> {
+
     return observableOf({
       pageList: this.pagerList(this.basicData, pager),
       total: this.basicData.length,
     }).pipe(delay(1000));
+  }
+
+  getListAllData(endpoint: string,entite:string){
+    return this.http.post(GlobalConstants.apiURL+entite+"/"+endpoint,{});
+  }
+
+  // getListAllData(endpoint: string,entite:string,pager: ListPager){
+  //   var d: any[] = [];
+  //   var respager ;
+  //   var datar= {}
+  //   this.http.post(GlobalConstants.apiURL+entite+"/"+endpoint,{}).subscribe((data:any)=>{
+  //     data.response.data.forEach((element:any) => {
+  //       d.push(element);
+  //     });
+  //   },error=>{
+
+  //   },()=>{
+
+
+  //   })
+
+  //   return this.http.post(GlobalConstants.apiURL+entite+"/"+endpoint,{}).subscribe((data:any)=>{
+  //     data.response.data.forEach((element:any) => {
+  //       d.push(element);
+  //     });
+  //     return d;
+  //   },error=>{
+
+  //   },()=>{
+
+
+  //   });
+
+  //   // return observableOf(
+  //   //   console.log(d),
+  //   //   console.log(d.slice(pager.pageSize! * (pager.pageIndex! - 1), pager.pageSize! * pager.pageIndex!)),
+  //   //   {
+  //   //   pageList: d.slice(pager.pageSize! * (pager.pageIndex! - 1), pager.pageSize! * pager.pageIndex!),
+  //   //   total: d.length,
+  //   // }).pipe(delay(5000));
+  // }
+
+  addData(endpoint: string,entite:string,body:any){
+    return this.http.post(GlobalConstants.apiURL+entite+"/"+endpoint,body);
   }
 
   getOriginSource(pager: ListPager): Observable<any> {
