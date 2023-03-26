@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BasicFormComponent } from './basic-form/basic-form.component';
 import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { MailgestionComponent } from './mailgestion.component';
-import { AdvanceFormComponent } from './advance-form/advance-form.component';
+import { MailAdvanceFormComponent } from './advance-form/advance-form.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       { path: 'basic-form', component: BasicFormComponent },
       { path: 'form-layout', component: FormLayoutComponent },
-      { path: 'advanced-form', component: AdvanceFormComponent },
+      { path: 'advanced-form', component: MailAdvanceFormComponent },
       { path: 'dynamic-form', component: DynamicFormComponent },
     ],
   },

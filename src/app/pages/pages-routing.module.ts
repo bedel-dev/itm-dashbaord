@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: 'mailgestion',
         loadChildren: () =>
-          import('./mailgestion/usergestion.module').then((m) => m.MailgestionModule),
+          import('./mailgestion/mailgestion.module').then((m) => m.MailgestionModule),
       },
       {
         path: 'list',

@@ -67,7 +67,7 @@ export class AddUserComponent implements OnInit {
       id: 'delete-dialog',
       width: '346px',
       maxHeight: '600px',
-      title: 'Alert',
+      title: 'Alerte',
       showAnimate: true,
       content: msg,
       backdropCloseable: true,

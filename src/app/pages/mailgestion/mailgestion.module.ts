@@ -20,8 +20,7 @@ import { AdminFormModule } from 'src/app/@shared/components/admin-form/admin-for
 import { DynamicFormsModule } from 'src/app/@shared/components/dynamic-forms/dynamic-forms.module';
 import { AddUserModule } from 'src/app/@shared/components/adduser';
 import { MailgestionComponent } from './mailgestion.component';
-import { UsergestionRoutingModule } from '../usergestion/usergestion-routing.module';
-import { AdvanceFormComponent } from './advance-form/advance-form.component';
+import { MailAdvanceFormComponent } from './advance-form/advance-form.component';
 
 @NgModule({
   declarations: [
@@ -32,13 +31,13 @@ import { AdvanceFormComponent } from './advance-form/advance-form.component';
     VerticalFormComponent,
     MultiColumnsFormComponent,
     ModalFormComponent,
-    AdvanceFormComponent,
+    MailAdvanceFormComponent,
     ModalFormContentComponent,
     DynamicFormComponent
   ],
   imports: [
     SharedModule,
-    UsergestionRoutingModule,
+    MailgestionRoutingModule,
     TagsInputModule,
     DatepickerModule,
     InputNumberModule,

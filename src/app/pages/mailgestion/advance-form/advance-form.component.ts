@@ -6,11 +6,11 @@ import { ListDataService } from 'src/app/@core/mock/list-data.service';
 import { FormConfig } from 'src/app/@shared/components/admin-form';
 
 @Component({
-  selector: 'da-advance-form',
+  selector: 'da-advance-mailadvance',
   templateUrl: './advance-form.component.html',
   styleUrls: ['./advance-form.component.scss'],
 })
-export class AdvanceFormComponent implements OnInit {
+export class MailAdvanceFormComponent implements OnInit {
   editableTip = EditableTip.btn;
   nameEditing!: boolean;
   busy!: Subscription;
@@ -116,31 +116,28 @@ export class AdvanceFormComponent implements OnInit {
 
   priorities = ['Low', 'Medium', 'High'];
 
-  tableWidthConfig: TableWidthConfig[] = [
+    tableWidthConfig: TableWidthConfig[] = [
     {
       field: 'id',
       width: '150px',
     },
     {
       field: 'title',
-      width: '100px',
-    },
-    {
-      field: 'priority',
       width: '150px',
     },
     {
+      field: 'priority',
+      width: '200px',
+    },
+    {
       field: 'iteration',
-      width: '100px',
+      width: '220px',
     },
     {
       field: 'assignee',
-      width: '100px',
+      width: '150px',
     },
-    {
-      field: 'status',
-      width: '100px',
-    },
+
     {
       field: 'Actions',
       width: '100px',
@@ -164,7 +161,7 @@ export class AdvanceFormComponent implements OnInit {
     //   this.pager.total = res.total;
     // });
 
-    this.busy = this.listDataService.getListAllData("list.php","users").subscribe((res:any) => {
+    this.busy = this.listDataService.getListAllData("list.php","email").subscribe((res:any) => {
       res.pageList = res.response.data.slice(this.pager.pageSize! * (this.pager.pageIndex! - 1), this.pager.pageSize! * this.pager.pageIndex!)
       res.pageList.$expandConfig = { expand: false };
       res.total = res.response.data.length;
@@ -239,9 +236,9 @@ export class AdvanceFormComponent implements OnInit {
       id: 'delete-dialog',
       width: '346px',
       maxHeight: '600px',
-      title: 'Delete',
+      title: 'Alerte',
       showAnimate: false,
-      content: 'Are you sure you want to delete it?',
+      content: 'Voulez-vous vraiment supprimer cette ligne',
       backdropCloseable: true,
       onClose: () => {},
       buttons: [
@@ -250,7 +247,7 @@ export class AdvanceFormComponent implements OnInit {
           text: 'Ok',
           disabled: false,
           handler: () => {
-            this.listData.splice(index, 1);
+            //this.listData.splice(index, 1);
             results.modalInstance.hide();
           },
         },

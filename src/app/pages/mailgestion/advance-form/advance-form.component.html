@@ -6,14 +6,14 @@
       </a>
     </d-breadcrumb-item>
     <d-breadcrumb-item>
-      Gestion des Utilisateurs
+      Gestion des Messages
     </d-breadcrumb-item>
     <d-breadcrumb-item>
-      Liste des Utilisateurs
+      Liste des Messages
     </d-breadcrumb-item>
   </d-breadcrumb>
     <div class="da-content-banner-title">
-    Utilisateurs
+    Messages
   </div>
  <!-- you car write destion here  <div>description</div>-->
 </div>
@@ -26,38 +26,15 @@
             <thead dTableHead>
               <tr dTableRow>
                 <th dHeadCell>Nom & Prenom</th>
-                <th dHeadCell>Contact</th>
+                <th dHeadCell>Sujet</th>
                 <th dHeadCell>Email</th>
-                <th dHeadCell>Role</th>
-                <th dHeadCell>Username</th>
+                <th dHeadCell>Content</th>
                 <th dHeadCell>Date de creation</th>
                 <th dHeadCell>Actions</th>
               </tr>
             </thead>
             <tbody dTableBody>
               <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
-                <tr dTableRow *ngIf="rowIndex === 0">
-                  <td dTableCell [attr.colspan]="tableWidthConfig.length">
-                    <div
-                      *ngIf="!headerNewForm"
-                      (click)="newRow()"
-                      class="cursor-pointer"
-                    >
-                      <span class="tips-icon icon-add"></span>
-                      <span style="margin-left: 10px">Ajouter un Utilisateur</span>
-                    </div>
-                    <div *ngIf="headerNewForm" class="edit-padding-fix">
-                      <da-adduser-form
-                        [formConfig]="formConfig"
-                        [formData]="defaultRowData"
-                        [typeform]="typeformulaire"
-                        class="editable-row"
-                        (submitted)="quickRowAdded($event)"
-                        (canceled)="quickRowCancel()"
-                      ></da-adduser-form>
-                    </div>
-                  </td>
-                </tr>
                 <tr dTableRow>
                   <td
                     dTableCell
@@ -92,7 +69,7 @@
                     [beforeEditEnd]="beforeEditEnd"
                   >
                     <span *ngIf="!rowItem['titleEdit']">
-                      {{ rowItem?.contact }}</span>
+                      {{ rowItem?.sujet }}</span>
                     <div *ngIf="rowItem['titleEdit']" class="edit-padding-fix">
                       <input
                         class="devui-form-control"
@@ -115,7 +92,7 @@
                     [beforeEditEnd]="beforeEditEnd"
                   >
                     <span *ngIf="!rowItem['titleEdit']">
-                      {{ rowItem?.mail }}</span>
+                      {{ rowItem?.email }}</span>
                     <div *ngIf="rowItem['titleEdit']" class="edit-padding-fix">
                       <input
                         class="devui-form-control"
@@ -138,7 +115,7 @@
                     [beforeEditEnd]="beforeEditEnd"
                   >
                     <span *ngIf="!rowItem['iterationEdit']">{{
-                      rowItem?.role
+                      rowItem?.content
                     }}</span>
                     <div
                       *ngIf="rowItem['iterationEdit']"
@@ -148,37 +125,6 @@
                         dTextInput
                         size="sm"
                         [(ngModel)]="rowItem.iteration"
-                      />
-                    </div>
-                  </td>
-                  <td
-                    dTableCell
-                    [editable]="false"
-                    [editableTip]="editableTip"
-                    [(editing)]="rowItem['assigneeEdit']"
-                    [rowItem]="rowItem"
-                    [field]="'assignee'"
-                    [beforeEditStart]="beforeEditStart"
-                    [beforeEditEnd]="beforeEditEnd"
-                  >
-                    <span *ngIf="!rowItem['assigneeEdit']">
-                      <d-avatar
-                        [name]="rowItem.assignee"
-                        [width]="24"
-                        [height]="24"
-                      ></d-avatar>
-                      <span style="margin-left: 6px">{{
-                        rowItem.username
-                      }}</span>
-                    </span>
-                    <div
-                      *ngIf="rowItem['assigneeEdit']"
-                      class="edit-padding-fix"
-                    >
-                      <input
-                        dTextInput
-                        size="sm"
-                        [(ngModel)]="rowItem.assignee"
                       />
                     </div>
                   </td>
