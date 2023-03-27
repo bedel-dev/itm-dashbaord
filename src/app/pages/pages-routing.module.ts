@@ -30,6 +30,11 @@ const routes: Routes = [
           import('./mailgestion/mailgestion.module').then((m) => m.MailgestionModule),
       },
       {
+        path: 'missiongestion',
+        loadChildren: () =>
+          import('./missiongestion/missiongestion.module').then((m) => m.MissiongestionModule),
+      },
+      {
         path: 'list',
         loadChildren: () =>
           import('./list/list.module').then((m) => m.ListModule),

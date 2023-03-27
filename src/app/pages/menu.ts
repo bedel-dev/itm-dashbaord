@@ -54,6 +54,17 @@ export default function (values: any) {
       menuIcon: 'icon icon-modify',
     },
     {
+      title: values['gestion_mission']['title'],
+      children: [
+        {
+          title: values['gestion_mission']['seealldata'],
+          link: '/pages/missiongestion/advanced-form',
+        },
+      ],
+      link: '/pages/missiongestion',
+      menuIcon: 'icon icon-console',
+    },
+    {
       title: values['gestion_mail']['title'],
       children: [
         {

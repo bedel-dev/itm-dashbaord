@@ -1,0 +1,253 @@
+<div class="da-content-banner">
+  <d-breadcrumb>
+    <d-breadcrumb-item>
+      <a routerLink="/">
+        Home
+      </a>
+    </d-breadcrumb-item>
+    <d-breadcrumb-item>
+      Gestion des Missions
+    </d-breadcrumb-item>
+    <d-breadcrumb-item>
+      Liste des Missions
+    </d-breadcrumb-item>
+  </d-breadcrumb>
+    <div class="da-content-banner-title">
+    Missions
+  </div>
+ <!-- you car write destion here  <div>description</div>-->
+</div>
+<div class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-advance-form" dLoading [loading]="busy">
+        <div class="da-advace-form-content">
+          <d-data-table #dataTable [dataSource]="listData" [scrollable]="true" [tableWidthConfig]="tableWidthConfig">
+            <thead dTableHead>
+              <tr dTableRow>
+                <th dHeadCell>Objet de mission</th>
+                <th dHeadCell>Message</th>
+                <th dHeadCell>Debut de mission </th>
+                <th dHeadCell>Fin de mission</th>
+                <th dHeadCell>Ouvrier</th>
+                <th dHeadCell>Client</th>
+                <th dHeadCell>Statut</th>
+                <th dHeadCell>Date de creation</th>
+                <th dHeadCell>Actions</th>
+              </tr>
+            </thead>
+            <tbody dTableBody>
+              <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                <tr dTableRow>
+                  <td
+                    dTableCell
+                    [editable]="false"
+                    [editableTip]="editableTip"
+                    [(editing)]="rowItem['idEdit']"
+                    [rowItem]="rowItem"
+                    [field]="'id'"
+                    [beforeEditStart]="beforeEditStart"
+                    [beforeEditEnd]="beforeEditEnd"
+                  >
+                    <span *ngIf="!rowItem['idEdit']">{{ rowItem?.motif}}</span>
+                    <div *ngIf="rowItem['idEdit']" class="edit-padding-fix">
+                      <input
+                        class="devui-form-control"
+                        name="id"
+                        [(ngModel)]="rowItem.id"
+                        [attr.maxlength]="100"
+                        [attr.minlength]="3"
+                      />
+                    </div>
+                  </td>
+                  <td
+                  dTableCell
+                  [editable]="false"
+                  [editableTip]="editableTip"
+                  [(editing)]="rowItem['idEdit']"
+                  [rowItem]="rowItem"
+                  [field]="'id'"
+                  [beforeEditStart]="beforeEditStart"
+                  [beforeEditEnd]="beforeEditEnd"
+                >
+                  <span *ngIf="!rowItem['idEdit']">{{ rowItem?.information}}</span>
+                  <div *ngIf="rowItem['idEdit']" class="edit-padding-fix">
+                    <input
+                      class="devui-form-control"
+                      name="id"
+                      [(ngModel)]="rowItem.id"
+                      [attr.maxlength]="100"
+                      [attr.minlength]="3"
+                    />
+                  </div>
+                </td>
+                  <td
+                    dTableCell
+                    [editable]="false"
+                    [editableTip]="editableTip"
+                    [(editing)]="rowItem['titleEdit']"
+                    [rowItem]="rowItem"
+                    [field]="'title'"
+                    [beforeEditStart]="beforeEditStart"
+                    [beforeEditEnd]="beforeEditEnd"
+                  >
+                    <span *ngIf="!rowItem['titleEdit']">
+                      {{ rowItem?.datedebutmission}}</span>
+                    <div *ngIf="rowItem['titleEdit']" class="edit-padding-fix">
+                      <input
+                        class="devui-form-control"
+                        name="title"
+                        [(ngModel)]="rowItem.mail"
+                        [attr.maxlength]="100"
+                        [attr.minlength]="3"
+                      />
+                    </div>
+                  </td>
+
+                  <td
+                    dTableCell
+                    [editable]="false"
+                    [editableTip]="editableTip"
+                    [(editing)]="rowItem['titleEdit']"
+                    [rowItem]="rowItem"
+                    [field]="'title'"
+                    [beforeEditStart]="beforeEditStart"
+                    [beforeEditEnd]="beforeEditEnd"
+                  >
+                    <span *ngIf="!rowItem['titleEdit']">
+                      {{ rowItem?.datefinmission}}</span>
+                    <div *ngIf="rowItem['titleEdit']" class="edit-padding-fix">
+                      <input
+                        class="devui-form-control"
+                        name="title"
+                        [(ngModel)]="rowItem.datefinmission"
+                        [attr.maxlength]="100"
+                        [attr.minlength]="3"
+                      />
+                    </div>
+                  </td>
+
+                  <td
+                    dTableCell
+                    [editable]="false"
+                    [editableTip]="editableTip"
+                    [(editing)]="rowItem['iterationEdit']"
+                    [rowItem]="rowItem"
+                    [field]="'iteration'"
+                    [beforeEditStart]="beforeEditStart"
+                    [beforeEditEnd]="beforeEditEnd"
+                  >
+                    <span *ngIf="!rowItem['iterationEdit']">{{
+                      rowItem?.idouvrier
+                    }}</span>
+                    <div
+                      *ngIf="rowItem['iterationEdit']"
+                      class="edit-padding-fix"
+                    >
+                      <input
+                        dTextInput
+                        size="sm"
+                        [(ngModel)]="rowItem.iteration"
+                      />
+                    </div>
+                  </td>
+                  <td
+                  dTableCell
+                  [editable]="false"
+                  [editableTip]="editableTip"
+                  [(editing)]="rowItem['iterationEdit']"
+                  [rowItem]="rowItem"
+                  [field]="'iteration'"
+                  [beforeEditStart]="beforeEditStart"
+                  [beforeEditEnd]="beforeEditEnd"
+                >
+                  <span *ngIf="!rowItem['iterationEdit']">{{
+                    rowItem?.idclient
+                  }}</span>
+                  <div
+                    *ngIf="rowItem['iterationEdit']"
+                    class="edit-padding-fix"
+                  >
+                    <input
+                      dTextInput
+                      size="sm"
+                      [(ngModel)]="rowItem.iteration"
+                    />
+                  </div>
+                </td>
+                <td
+                dTableCell
+                [editable]="false"
+                [editableTip]="editableTip"
+                [(editing)]="rowItem['iterationEdit']"
+                [rowItem]="rowItem"
+                [field]="'iteration'"
+                [beforeEditStart]="beforeEditStart"
+                [beforeEditEnd]="beforeEditEnd"
+              >
+                <span *ngIf="!rowItem['iterationEdit']">{{
+                  rowItem?.state
+                }}</span>
+                <div
+                  *ngIf="rowItem['iterationEdit']"
+                  class="edit-padding-fix"
+                >
+                  <input
+                    dTextInput
+                    size="sm"
+                    [(ngModel)]="rowItem.iteration"
+                  />
+                </div>
+              </td>
+                  <td
+                    dTableCell
+                    [editable]="false"
+                    [editableTip]="editableTip"
+                    [(editing)]="rowItem['statusEdit']"
+                    [rowItem]="rowItem"
+                    [field]="'status'"
+                    [beforeEditStart]="beforeEditStart"
+                    [beforeEditEnd]="beforeEditEnd"
+                  >
+                    <span *ngIf="!rowItem['statusEdit']"
+                      ><span>{{rowItem?.createdat.split(" ")[0]}}</span></span
+                    >
+                    <div *ngIf="rowItem['statusEdit']" class="edit-padding-fix">
+                      <d-select
+                        name="status"
+                        [(ngModel)]="rowItem.status"
+                        [options]="['Stuck', 'Done', 'Working on it']"
+                      ></d-select>
+                    </div>
+                  </td>
+
+                  <td>
+                    <d-button
+                      icon="icon-delete"
+                      bsStyle="text-dark"
+                      title="delete"
+                      (click)="deleteRow(rowIndex)"
+                    ></d-button>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </d-data-table>
+        </div>
+        <d-pagination
+          [size]="'sm'"
+          [total]="pager.total"
+          [(pageSize)]="pager.pageSize"
+          [(pageIndex)]="pager.pageIndex"
+          [canViewTotal]="true"
+          [canChangePageSize]="true"
+          [canJumpPage]="true"
+          [maxItems]="5"
+          (pageIndexChange)="onPageChange($event)"
+          (pageSizeChange)="onSizeChange($event)"
+        >
+        </d-pagination>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>

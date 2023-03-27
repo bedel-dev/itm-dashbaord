@@ -20,6 +20,13 @@ export default {
       seealldata: 'Voir les Utilisateurs',
       dynamicForm: 'Dynamic Form'
     },
+    gestion_mission: {
+      title: 'Gestion des Missions',
+      basicForm: 'Basic Form',
+      formLayout: 'Form Layout',
+      seealldata: 'Voir les Missions',
+      dynamicForm: 'Dynamic Form'
+    },
     gestion_mail: {
       title: 'Gestion des Messages',
       basicForm: 'Basic Form',
