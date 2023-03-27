@@ -147,13 +147,35 @@ export class MailAdvanceFormComponent implements OnInit {
   constructor(private listDataService: ListDataService, private dialogService: DialogService) {}
 
   ngOnInit() {
-    this.getList();
+    this.getUser();
   }
 
   onEditEnd(rowItem: any, field: any) {
     rowItem[field] = false;
   }
+  userAll:any[]=[];
+  ouvierAll:any[]=[];
+  clientAll:any[]=[];
+  getUser(){
+    this.listDataService.getListAllData("list.php","users").subscribe((data:any)=>{
+      data.response.data.forEach((element:any) => {
 
+        if(element.role == "ouvrier"){
+          this.ouvierAll.push(element);
+        }
+
+        if(element.role == "client"){
+          this.clientAll.push(element);
+        }
+        this.userAll.push(element);
+      });
+      console.log(this.userAll);
+    },error=>{
+
+    },()=>{
+      this.getList();
+    })
+  }
   getList() {
     // this.busy = this.listDataService.getListData(this.pager).subscribe((res) => {
     //   res.pageList.$expandConfig = { expand: false };
@@ -162,6 +184,39 @@ export class MailAdvanceFormComponent implements OnInit {
     // });
 
     this.busy = this.listDataService.getListAllData("list.php","mission").subscribe((res:any) => {
+        res.response.data.forEach((element:any) => {
+          if(element.state !=="initier"){
+            var ouvrier = this.ouvierAll.find((item:any)=>{
+              return item.id.toString() == element.idouvrier;
+            });
+            if(ouvrier){
+              element.ouvriernom = ouvrier.nomprenom
+            }
+          }else if(element.state =="initier"){
+            element.ouvriernom = "Aucun"
+          }
+          var client = this.clientAll.find((item:any)=>{
+            return item.id.toString() == element.idclient;
+          });
+          if(client){
+            element.clientnom = client.nomprenom
+            element.clientcontact = client.contact
+          }
+          if(element.datefinmission == "null"){
+            element.datefinmission = "aucun"
+          }
+          if(element.datedebutmission == "null"){
+            element.datedebutmission = "aucun"
+          }
+
+        if(element.state =="initier"){
+          element.priority = "High";
+        }else if(element.state =="en cours"){
+          element.priority = "Low";
+        }else if(element.state == "terminer"){
+          element.priority = "Medium";
+        }
+      });
       res.pageList = res.response.data.slice(this.pager.pageSize! * (this.pager.pageIndex! - 1), this.pager.pageSize! * this.pager.pageIndex!)
       res.pageList.$expandConfig = { expand: false };
       res.total = res.response.data.length;

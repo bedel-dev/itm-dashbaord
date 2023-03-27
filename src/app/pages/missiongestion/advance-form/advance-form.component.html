@@ -27,8 +27,8 @@
               <tr dTableRow>
                 <th dHeadCell>Objet de mission</th>
                 <th dHeadCell>Message</th>
-                <th dHeadCell>Debut de mission </th>
-                <th dHeadCell>Fin de mission</th>
+                <th dHeadCell>Debut mission </th>
+                <th dHeadCell>Fin mission</th>
                 <th dHeadCell>Ouvrier</th>
                 <th dHeadCell>Client</th>
                 <th dHeadCell>Statut</th>
@@ -137,8 +137,14 @@
                     [beforeEditStart]="beforeEditStart"
                     [beforeEditEnd]="beforeEditEnd"
                   >
-                    <span *ngIf="!rowItem['iterationEdit']">{{
-                      rowItem?.idouvrier
+                    <span *ngIf="!rowItem['iterationEdit']">
+                      <d-avatar
+                      [name]="rowItem.ouvriernom"
+                      [width]="24"
+                      [height]="24"
+                    ></d-avatar>
+                      {{
+                      rowItem?.ouvriernom
                     }}</span>
                     <div
                       *ngIf="rowItem['iterationEdit']"
@@ -161,8 +167,14 @@
                   [beforeEditStart]="beforeEditStart"
                   [beforeEditEnd]="beforeEditEnd"
                 >
-                  <span *ngIf="!rowItem['iterationEdit']">{{
-                    rowItem?.idclient
+                  <span *ngIf="!rowItem['iterationEdit']">
+                    <d-avatar
+                    [name]="rowItem.clientnom"
+                    [width]="24"
+                    [height]="24"
+                  ></d-avatar>
+                  {{
+                    rowItem?.clientnom
                   }}</span>
                   <div
                     *ngIf="rowItem['iterationEdit']"
@@ -185,9 +197,12 @@
                 [beforeEditStart]="beforeEditStart"
                 [beforeEditEnd]="beforeEditEnd"
               >
-                <span *ngIf="!rowItem['iterationEdit']">{{
-                  rowItem?.state
-                }}</span>
+                <span  *ngIf="!rowItem['iterationEdit']">
+                  <d-tag
+                  [tag]="rowItem?.state"
+                  [labelStyle]="rowItem?.priority">
+                </d-tag>
+                </span>
                 <div
                   *ngIf="rowItem['iterationEdit']"
                   class="edit-padding-fix"
