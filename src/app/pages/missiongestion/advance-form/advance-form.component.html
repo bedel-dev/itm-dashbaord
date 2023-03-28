@@ -17,7 +17,7 @@
   </div>
  <!-- you car write destion here  <div>description</div>-->
 </div>
-<div class="da-content-wrapper">
+<div *ngIf="!accepteMission" class="da-content-wrapper">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-advance-form" dLoading [loading]="busy">
@@ -38,6 +38,28 @@
             </thead>
             <tbody dTableBody>
               <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                <tr dTableRow *ngIf="rowIndex === 0">
+                  <td dTableCell [attr.colspan]="tableWidthConfig.length">
+                    <div
+                      *ngIf="!headerNewForm"
+                      (click)="newRow()"
+                      class="cursor-pointer"
+                    >
+                      <span class="tips-icon icon-add"></span>
+                      <span style="margin-left: 10px">Ajouter une misssion</span>
+                    </div>
+                    <div *ngIf="headerNewForm" class="edit-padding-fix">
+                      <da-adduser-form
+                        [formConfig]="formConfig"
+                        [formData]="defaultRowData"
+                        [typeform]="typeformulaire"
+                        class="editable-row"
+                        (submitted)="quickRowAdded($event)"
+                        (canceled)="quickRowCancel()"
+                      ></da-adduser-form>
+                    </div>
+                  </td>
+                </tr>
                 <tr dTableRow>
                   <td
                     dTableCell
@@ -237,6 +259,16 @@
                   </td>
 
                   <td>
+                    <span *ngIf="rowItem.state=='initier'">
+                       <button  (click)="openView(rowItem,'accepter','en cours')"    style="background: rgb(21, 189, 97); color:rgb(255, 255, 255); width:60px; border-radius: var(--devui-border-radius, 2px);"   >
+                        Accepter
+                       </button>
+                    </span>
+                    <span *ngIf="rowItem.state!=='initier'">
+                      <button   style="background: rgb(21, 189, 97); color:rgb(255, 255, 255); width:60px; border-radius: var(--devui-border-radius, 2px);"   >
+
+                      </button>
+                   </span>
                     <d-button
                       icon="icon-delete"
                       bsStyle="text-dark"
@@ -262,6 +294,145 @@
           (pageSizeChange)="onSizeChange($event)"
         >
         </d-pagination>
+      </div>
+    </da-col-item>
+  </da-layout-row>
+</div>
+
+<div *ngIf="accepteMission" class="da-content-wrapper">
+  <da-layout-row [daGutter]="[24, 24]">
+    <da-col-item [daSpan]="24" [daXs]="24">
+      <div class="da-basic-form">
+        <form
+          dForm
+          ngForm
+          [dValidateRules]="{
+            message: 'Ajout echoué, verifier si vous avez entrer toutes les valeurs'
+          }"
+          [layout]="verticalLayout"
+          #projectForm="dValidateRules"
+          (dSubmit)="submitProjectForm($event)"
+          autocomplete="off">
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Le nom du client qui a fait la demande.'">Client</d-form-label>
+            <d-form-control>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="client"
+                [(ngModel)]="client"
+                [dValidateRules]="{
+                  validators: [{ required: true }],
+                  asyncValidators: [
+                    {
+                      sameName: this.checkName.bind(this),
+                      message: 'Duplicate name.'
+                    }
+                  ]
+                }"
+              />
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Celui qui doit faire la mission'">Ouvrier</d-form-label>
+            <d-form-control>
+              <d-select
+
+                [options]="OuvrierOptions"
+                [(ngModel)]="ouvrier"
+                [name]="'ouvrier'"
+                [placeholder]="'Selectionnez un ouvrier'"
+                [filterKey]="'nomprenom'"
+                [allowClear]="true"
+                [dValidateRules]="[{ required: true }]"
+              ></d-select>
+            </d-form-control>
+            <div *ngIf="OuvrierOptions.length == 0" style="color:red" >
+              Pas d'ouvrier libre
+            </div>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Date de debut de la mission, cette date ne doit pas etre modifier'">Date debut de la mission</d-form-label>
+            <d-form-control>
+              <div class="devui-input-group devui-dropdown-origin">
+                <input
+                  [disabled]="disabled"
+                  class="devui-input devui-form-control"
+                  placeholder="y/MM/dd"
+                  (click)="datePicker1.toggle()"
+                  name="datebegin"
+                  [(ngModel)]="datebegin"
+                  autocomplete="off"
+                  dDatepicker
+                  appendToBody
+                  #datePicker1="datepicker"
+                  [dValidateRules]="[{ required: true }]">
+                <div class="devui-input-group-addon close-icon-wrapper" (click)="datePicker1.clearAll()">
+                  <i class="icon icon-close"></i>
+                </div>
+                <div class="devui-input-group-addon" (click)="datePicker1.toggle()">
+                  <i class="icon icon-calendar"></i>
+                </div>
+              </div>
+
+
+            </d-form-control>
+          </d-form-item>
+
+          <d-form-item>
+            <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Ajouter la date de fin de la mission'">Date fin de la mission</d-form-label>
+            <d-form-control>
+              <div class="devui-input-group devui-dropdown-origin">
+                <input
+                  class="devui-input devui-form-control"
+                  placeholder="dd/MM/y"
+                  (click)="datePicker2.toggle()"
+                  name="datefin"
+                  [(ngModel)]="datefin"
+                  locale = "fr"
+                  autocomplete="off"
+                  dDatepicker
+                  appendToBody
+                  #datePicker2="datepicker"
+                  [dValidateRules]="[{ required: true }]">
+                <div class="devui-input-group-addon close-icon-wrapper" (click)="datePicker2.clearAll()">
+                  <i class="icon icon-close"></i>
+                </div>
+                <div class="devui-input-group-addon" (click)="datePicker2.toggle()">
+                  <i class="icon icon-calendar"></i>
+                </div>
+              </div>
+            </d-form-control>
+          </d-form-item>
+          <d-form-operation   style="
+          position: absolute;
+          bottom: 20px;
+          left: 33%;
+          ">
+          <button
+          class="mr-element-spacing"
+          circled="true"
+          (click)="Retour()"
+          style="margin-right: 8px; background-color:#009688; color:white; width: 97px;border-radius: var(--devui-border-radius, 2px);">
+          Retour
+        </button>
+            <d-button
+              dLoading
+              class="mr-element-spacing"
+              [title]="projectForm.errorMessage || ''"
+              circled="true"
+              style="margin-right: 8px"
+              [showLoading]="projectForm.pending"
+              dFormSubmit
+              [dFormSubmitData]="'submit-button'"
+            >
+              Enregister
+            </d-button>
+          </d-form-operation>
+        </form>
       </div>
     </da-col-item>
   </da-layout-row>

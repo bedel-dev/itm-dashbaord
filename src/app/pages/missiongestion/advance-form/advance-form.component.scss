@@ -39,11 +39,66 @@ span.state{
     margin: 12px 24px 12px 0 !important;
 
     .devui-form-label {
-      flex-basis: 100px !important;
+      //flex-basis: 100px !important;
     }
   }
   .devui-form-operation {
     display: inline-flex !important;
     margin-left: 0 !important;
   }
+}
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// //
+///
+.da-basic-form {
+  padding: 48px !important;
+  background-color: $devui-base-bg !important;
+  border-radius: $devui-border-radius-card !important;
+  box-shadow: $devui-shadow-length-base $devui-light-shadow !important;
+}
+
+form {
+  margin: 0 auto !important;
+  max-width: 50% !important;
+}
+
+@media only screen and (max-width: 1023px) {
+  form {
+    max-width: 80% !important;
+  }
+}
+
+.devui-input-group-addon {
+  width: 1%;
+  vertical-align: middle !important;
+
+  &:hover {
+    color: $devui-brand-active !important;
+  }
+}
+
+.devui-input-group {
+  max-width: 250px !important;
+}
+
+.close-icon-wrapper {
+  padding: 0 !important;
+}
+
+.icon-close {
+  border-right: 1px solid $devui-dividing-line;
+  padding-right: 10px !important;
+  cursor: pointer !important;
+}
+
+:host ::ng-deep .devui-select-placeholder {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }

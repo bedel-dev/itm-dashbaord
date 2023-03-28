@@ -12,6 +12,7 @@ export class ModalFormComponent {
   }
 
   openstandardDialog(dialogtype?: string) {
+    console.log(dialogtype);
     const results = this.dialogService.open({
       id: 'dialog-service',
       maxHeight: '300px',

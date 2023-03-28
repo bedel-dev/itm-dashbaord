@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService, EditableTip, FormLayout, TableWidthConfig } from 'ng-devui';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { Item, ListPager } from 'src/app/@core/data/listData';
 import { ListDataService } from 'src/app/@core/mock/list-data.service';
 import { FormConfig } from 'src/app/@shared/components/admin-form';
@@ -118,29 +119,40 @@ export class MailAdvanceFormComponent implements OnInit {
 
     tableWidthConfig: TableWidthConfig[] = [
     {
-      field: 'id',
+      field: 'objet',
       width: '150px',
     },
     {
-      field: 'title',
+      field: 'message',
       width: '200px',
     },
     {
-      field: 'priority',
+      field: 'debut',
       width: '110px',
     },
     {
-      field: 'iteration',
+      field: 'fin',
       width: '110px',
     },
     {
-      field: 'assignee',
+      field: 'ouvrier',
       width: '150px',
     },
-
+    {
+      field: 'client',
+      width: '150px',
+    },
+    {
+      field: 'statut',
+      width: '150px',
+    },
+    {
+      field: 'date',
+      width: '100px',
+    },
     {
       field: 'Actions',
-      width: '120px',
+      width: '150px',
     },
   ];
 
@@ -209,14 +221,27 @@ export class MailAdvanceFormComponent implements OnInit {
             element.datedebutmission = "aucun"
           }
 
-        if(element.state =="initier"){
-          element.priority = "High";
-        }else if(element.state =="en cours"){
-          element.priority = "Low";
-        }else if(element.state == "terminer"){
-          element.priority = "Medium";
-        }
+          if(element.state =="initier"){
+            element.priority = "High";
+          }else if(element.state =="en cours"){
+            element.priority = "Low";
+          }else if(element.state == "terminer"){
+            element.priority = "Medium";
+          }
       });
+      this.ouvierAll.forEach((ouvrier:any)=>{
+       var ou =  res.response.data.filter((mission:any) => {
+          return mission.idouvrier == ouvrier.id.toString()&&(mission.state=="en cours")
+        })
+
+        if(ou.length == 0){
+          this.OuvrierOptions.push(ouvrier);
+        }
+
+
+      })
+
+      //console.log("ouvrier libre",this.OuvrierOptions);
       res.pageList = res.response.data.slice(this.pager.pageSize! * (this.pager.pageIndex! - 1), this.pager.pageSize! * this.pager.pageIndex!)
       res.pageList.$expandConfig = { expand: false };
       res.total = res.response.data.length;
@@ -285,6 +310,29 @@ export class MailAdvanceFormComponent implements OnInit {
     this.pager.pageSize = e;
     this.getList();
   }
+  accepteMission:boolean = false;
+  missionAction:any;
+  openView(objet:any,action:any,etat:any){
+    if(action =="accepter"){
+      this.client = objet.clientnom
+      //this.ouvrier = objet.ouvriernom
+      var today = new Date();
+      this.datebegin = today
+      this.missionAction = objet;
+      this.accepteMission = true;
+      console.log(action);
+    }
+  }
+
+  Retour(){
+    this.accepteMission = false;
+
+  }
+  Action(objet:any,action:any,etat:any){
+    if(action =="accepter"){
+      console.log(action);
+    }
+  }
 
   deleteRow(index: number) {
     const results = this.dialogService.open({
@@ -293,7 +341,7 @@ export class MailAdvanceFormComponent implements OnInit {
       maxHeight: '600px',
       title: 'Alerte',
       showAnimate: false,
-      content: 'Voulez-vous vraiment supprimer cette ligne',
+      content:"Voulez-vous vraiment supprimer ?",
       backdropCloseable: true,
       onClose: () => {},
       buttons: [
@@ -316,5 +364,83 @@ export class MailAdvanceFormComponent implements OnInit {
         },
       ],
     });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  client:any;
+  ouvrier:any;
+  datebegin:any;
+  datefin:any;
+  disabled:boolean = true
+  // projectFormData = {
+  //   client: '',
+  //   ouvrier: null,
+  //   projectExecutor: null,
+  //   projectCycleTime: [null, null],
+  //   projectSecurity: 'Only member visible',
+  //   projectDescription: '',
+  //   projectExerciseDate: [{ id: '1', label: 'Mon' }],
+  // };
+
+  verticalLayout: FormLayout = FormLayout.Vertical;
+
+  existprojectNames = ['123', '123456', 'DevUI'];
+
+  checkboxOptions = [
+    { id: '1', label: 'Mon' },
+    { id: '2', label: 'Tue' },
+    { id: '3', label: 'Wed' },
+    { id: '4', label: 'Thur' },
+    { id: '5', label: 'Fri' },
+    { id: '6', label: 'Sat' },
+  ];
+
+  securityValue = ['Public', 'Only member visible'];
+
+  OwnerOptions = [
+    { id: '1', name: 'Owner1' },
+    { id: '2', name: 'Owner2' },
+    { id: '3', name: 'Owner3' },
+    { id: '4', name: 'Owner4' },
+  ];
+
+  OuvrierOptions:any[] = [];
+
+  getValue(value: object) {
+    console.log(value);
+  }
+
+  everyRange(range: any) {
+    return range.every((_: any) => !!_);
+  }
+
+  checkName(value: string) {
+    let res = true;
+    if (this.existprojectNames.indexOf(value) !== -1) {
+      res = false;
+    }
+    return of(res).pipe(delay(500));
+  }
+
+  validateDate(value: any): Observable<any | null> {
+    let message = null;
+    for (const item of value) {
+      if (item.id === '2') {
+        message = {
+          'zh-cn': `当前日期队列已满`,
+          'en-us': 'The task queue on the current execution day (Tuesday) is full.',
+        };
+      }
+    }
+    // Returned by the simulated backend interface
+    return of(message).pipe(delay(300));
+  }
+
+  submitProjectForm({ valid, directive, data, errors }: any) {
+    if (valid) {
+      // do something
+    } else {
+      // error tip
+    }
   }
 }

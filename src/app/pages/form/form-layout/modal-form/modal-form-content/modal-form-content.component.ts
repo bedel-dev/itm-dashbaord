@@ -30,6 +30,6 @@ export class ModalFormContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 }
