@@ -17,7 +17,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 const DEFAULT_TEXT_COLOR = '#252b3a';
-const DEFAULT_LINE_COLOR = '#adb0b8';
+const DEFAULT_LINE_COLOR = '#ADB0B8';
 
 @Component({
   selector: 'd-echarts',
@@ -29,12 +29,12 @@ const DEFAULT_LINE_COLOR = '#adb0b8';
 export class EchartsComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   echart: any;
   @Input() options: any;
-  @Input() notMerge: boolean;
-  @Input() lazyUpdate: boolean;
+  @Input() notMerge!: boolean;
+  @Input() lazyUpdate!: boolean;
   /**
    * echarts 主题
    */
-  @Input() theme: string | Object;
+  @Input() theme!: string | Object;
   /**
    * 当echarts初始化完成后，会返回echarts实例
    */
@@ -51,7 +51,7 @@ export class EchartsComponent implements AfterViewInit, OnChanges, OnDestroy, On
   }
   resizeSub: any;
   textColor = DEFAULT_TEXT_COLOR;
-  linecolor: string;
+  linecolor!: string;
   // 主题色色盘
   themeColorArray = [
     '#5E7CE0',

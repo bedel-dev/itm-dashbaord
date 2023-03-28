@@ -246,9 +246,9 @@ export const monitorOption = {
       },
       detail: {
         valueAnimation: true,
-        formatter: '{value}%',
-        fontSize: 30,
-        offsetCenter: [0, '70%'],
+        formatter: '{value}',
+        fontSize: 50,
+        offsetCenter: [0, '70'],
       },
       data: [
         {
@@ -258,7 +258,281 @@ export const monitorOption = {
     },
   ],
 };
-
+export const monitorOption1 = {
+  series: [
+    {
+      type: 'gauge',
+      progress: {
+        show: true,
+        width: 10,
+      },
+      axisLine: {
+        lineStyle: {
+          width: 10,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+        length: 15,
+        lineStyle: {
+          width: 2,
+          color: '#999',
+        },
+      },
+      axisLabel: {
+        show: false,
+        distance: 25,
+        color: '#999',
+        fontSize: 14,
+      },
+      anchor: {
+        show: true,
+        showAbove: true,
+        size: 20,
+        itemStyle: {
+          borderWidth: 8,
+        },
+      },
+      title: {
+        show: false,
+      },
+      detail: {
+        valueAnimation: true,
+        formatter: '{value}',
+        fontSize: 50,
+        offsetCenter: [0, '70'],
+      },
+      data: [
+        {
+          value: 80,
+        },
+      ],
+    },
+  ],
+};
+export const monitorOption2 = {
+  series: [
+    {
+      type: 'gauge',
+      progress: {
+        show: true,
+        width: 10,
+      },
+      axisLine: {
+        lineStyle: {
+          width: 10,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+        length: 15,
+        lineStyle: {
+          width: 2,
+          color: '#999',
+        },
+      },
+      axisLabel: {
+        show: false,
+        distance: 25,
+        color: '#999',
+        fontSize: 14,
+      },
+      anchor: {
+        show: true,
+        showAbove: true,
+        size: 20,
+        itemStyle: {
+          borderWidth: 8,
+        },
+      },
+      title: {
+        show: false,
+      },
+      detail: {
+        valueAnimation: true,
+        formatter: '{value}',
+        fontSize: 50,
+        offsetCenter: [0, '70'],
+      },
+      data: [
+        {
+          value: 70,
+        },
+      ],
+    },
+  ],
+};
+export const monitorOption3 = {
+  series: [
+    {
+      type: 'gauge',
+      progress: {
+        show: true,
+        width: 10,
+      },
+      axisLine: {
+        lineStyle: {
+          width: 10,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+        length: 15,
+        lineStyle: {
+          width: 2,
+          color: '#999',
+        },
+      },
+      axisLabel: {
+        show: false,
+        distance: 25,
+        color: '#999',
+        fontSize: 14,
+      },
+      anchor: {
+        show: true,
+        showAbove: true,
+        size: 20,
+        itemStyle: {
+          borderWidth: 8,
+        },
+      },
+      title: {
+        show: false,
+      },
+      detail: {
+        valueAnimation: true,
+        formatter: '{value}',
+        fontSize: 50,
+        offsetCenter: [0, '70'],
+      },
+      data: [
+        {
+          value: 70,
+        },
+      ],
+    },
+  ],
+};
+export const monitorOption4 = {
+  series: [
+    {
+      type: 'gauge',
+      progress: {
+        show: true,
+        width: 10,
+      },
+      axisLine: {
+        lineStyle: {
+          width: 10,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+        length: 15,
+        lineStyle: {
+          width: 2,
+          color: '#999',
+        },
+      },
+      axisLabel: {
+        show: false,
+        distance: 25,
+        color: '#999',
+        fontSize: 14,
+      },
+      anchor: {
+        show: true,
+        showAbove: true,
+        size: 20,
+        itemStyle: {
+          borderWidth: 8,
+        },
+      },
+      title: {
+        show: false,
+      },
+      detail: {
+        valueAnimation: true,
+        formatter: '{value}',
+        fontSize: 50,
+        offsetCenter: [0, '70'],
+      },
+      data: [
+        {
+          value: 70,
+        },
+      ],
+    },
+  ],
+};
+export const monitorOption5dead = {
+  series: [
+    {
+      type: 'gauge',
+      progress: {
+        show: true,
+        width: 10,
+      },
+      axisLine: {
+        lineStyle: {
+          width: 10,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+        length: 15,
+        lineStyle: {
+        width: 2,
+        color: '#999',
+        },
+      },
+      axisLabel: {
+        show: false,
+        distance: 25,
+        color: '#999',
+        fontSize: 14,
+      },
+      anchor: {
+        show: true,
+        showAbove: true,
+        size: 20,
+        itemStyle: {
+          borderWidth: 8,
+        },
+      },
+      title: {
+        show: false,
+      },
+      detail: {
+        valueAnimation: true,
+        formatter: '{value}',
+        fontSize: 50,
+        offsetCenter: [10, '70'],
+      },
+      data: [
+        {
+          value: 70,
+        },
+      ],
+    },
+  ],
+};
 export const mapOption = {
   tooltip: {
     trigger: 'item',
