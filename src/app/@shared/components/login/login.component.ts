@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
   }
 
   onClick(tabId: string | number) {
-    // console.log(this.username,this.password)
+     console.log(this.username,this.password)
     switch (tabId) {
       case 'tab1':
         this.authService.login(this.username, this.password).subscribe(
@@ -125,8 +125,21 @@ export class LoginComponent implements OnInit {
                 },
               ];
             }else{
-            this.authService.setSession(res.response.data);
-            this.router.navigate(['/']);
+              if(res.response.statutCode == 200){
+                if(res.response.data.role !=="admin"){
+                  this.toastMessage = [
+                    {
+                      severity: 'error',
+                      // summary: "nom d'utilisateur",
+                      content: "Veuillez n'êtes pas autorisé. ",
+                    },
+                  ];
+                }else{
+                  this.authService.setSession(res.response.data);
+                  this.router.navigate(['/pages/dashboard/monitor']);
+                }
+              }
+
             }
           },
           (error) => {
