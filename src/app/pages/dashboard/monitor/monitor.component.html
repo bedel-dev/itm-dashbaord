@@ -17,7 +17,7 @@
           Nombre missions en cours
         </div>
         <div class="da-echart-wrapper">
-          <d-echarts  [options]="monitorOptions1" height="100%" (chartReady)="getOccupationChart($event)"></d-echarts>
+          <d-echarts  [options]="monitorsOptions1" height="100%" (chartReady)="getOccupationChart1($event)"></d-echarts>
         </div>
       </div>
     </da-col-item>
@@ -28,7 +28,7 @@
           Nombre de missions initiées
         </div>
         <div class="da-echart-wrapper">
-          <d-echarts [options]="monitorOptions2" height="100%" (chartReady)="getOccupationChart($event)"></d-echarts>
+          <d-echarts [options]="monitorsOptions2" height="100%" (chartReady)="getOccupationChart2($event)"></d-echarts>
         </div>
       </div>
     </da-col-item>
@@ -39,7 +39,7 @@
           Nombre missions terminées
         </div>
         <div class="da-echart-wrapper">
-          <d-echarts   [options]="monitorOptions3" height="100%" (chartReady)="getOccupationChart($event)"></d-echarts>
+          <d-echarts   [options]="monitorsOptions3" height="100%" (chartReady)="getOccupationChart3($event)"></d-echarts>
         </div>
       </div>
     </da-col-item>
@@ -50,7 +50,7 @@
           Nombre d'ouvriers
         </div>
         <div class="da-echart-wrapper">
-          <d-echarts [options]="monitorOptions4" height="100%" (chartReady)="getOccupationChart($event)"></d-echarts>
+          <d-echarts [options]="monitorsOptions4" height="100%" (chartReady)="getOccupationChart4($event)"></d-echarts>
         </div>
       </div>
     </da-col-item>
@@ -60,7 +60,7 @@
           Nombre de clients
         </div>
         <div class="da-echart-wrapper">
-          <d-echarts [options]="monitorsOptions5" height="100%" (chartReady)="getOccupationChart($event)"></d-echarts>
+          <d-echarts [options]="monitorsOptions5" height="100%" (chartReady)="getOccupationChart5($event)"></d-echarts>
         </div>
       </div>
     </da-col-item>

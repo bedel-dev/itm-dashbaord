@@ -3,7 +3,7 @@ export default {
     dashboard: {
       title: 'Dashboard',
       analysis: 'Analysis',
-      monitor: 'Monitor',
+      monitor: 'Monitoring',
       workspace: 'Work Space',
     },
     form: {
