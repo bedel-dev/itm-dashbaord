@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DialogService, EditableTip, FormLayout, TableWidthConfig } from 'ng-devui';
 import { Observable, Subscription, of } from 'rxjs';
@@ -15,107 +16,29 @@ export class MailAdvanceFormComponent implements OnInit {
   editableTip = EditableTip.btn;
   nameEditing!: boolean;
   busy!: Subscription;
-  typeformulaire:string = "adduser";
+  typeformulaire:string = "addmission";
   pager = {
     total: 0,
     pageIndex: 1,
     pageSize: 10,
   };
 
-  listData: Item[] = [];
+  listData: any[] = [];
 
   headerNewForm = false;
 
-  formConfig: FormConfig = {
-    layout: FormLayout.Horizontal,
-    labelSize: 'sm',
-    items: [
-      {
-        label: 'Nom & Prenom',
-        prop: 'name',
-        fonction:"text",
-        type: 'input',
-        required: true,
-        rule: {
-          validators: [{ required: true }],
-        },
-      },
-      {
-        label: 'Contact',
-        prop: 'contact',
-        fonction:"number",
-        type: 'input',
-        required: true,
-        rule: {
-          validators: [{ required: true }],
-        },
-      },
-      {
-        label: 'Email',
-        prop: 'mail',
-        type: 'input',
-        fonction:"email",
-        required: true,
-        rule: {
-          validators: [{ required: true }],
-        },
-      },
-      {
-        label: 'Password',
-        prop: 'pass1',
-        type: 'input',
-        required: true,
-        rule: {
-          validators: [{ required: true }],
-        },
-      },
-      {
-        label: 'Password',
-        prop: 'pass2',
-        type: 'input',
-        required: true,
-        rule: {
-          validators: [{ required: true }],
-        },
-      },
-      {
-        label: "Username",
-        prop: 'username',
-        type: 'input',
-        required: true,
-        rule: {
-          validators: [{ required: true }],
-        },
-      },
-      {
-        label: "Role",
-        prop: 'role',
-        type: 'select',
-        options: ['Admin', 'client', 'ouvrier'],
-        required: true,
-        rule: {
-          validators: [{ required: true }],
-        },
-      },
-      // {
-      //   label: 'Timeline',
-      //   prop: 'timeline',
-      //   type: 'datePicker',
-      // },
-    ],
-  };
+   formConfig!: FormConfig;
+   daytoday = new Date();
 
   defaultRowData = {
-    name: '',
-    contact: '',
-    mail: '',
-    pass1: '',
-    pass2: '',
-    username: '',
-    role: 'Choisissez un role',
+    objet: '',
+    message: '',
+    datebegin: this.daytoday,
+    datefin: this.daytoday,
+    ouvrier: 'Choisissez un ouvrier',
   };
 
-  priorities = ['Low', 'Medium', 'High'];
+  priorities = ['Low', 'Medium', 'High','Await'];
 
     tableWidthConfig: TableWidthConfig[] = [
     {
@@ -144,7 +67,7 @@ export class MailAdvanceFormComponent implements OnInit {
     },
     {
       field: 'statut',
-      width: '150px',
+      width: '100px',
     },
     {
       field: 'date',
@@ -152,7 +75,7 @@ export class MailAdvanceFormComponent implements OnInit {
     },
     {
       field: 'Actions',
-      width: '150px',
+      width: '190px',
     },
   ];
 
@@ -160,6 +83,7 @@ export class MailAdvanceFormComponent implements OnInit {
 
   ngOnInit() {
     this.getUser();
+
   }
 
   onEditEnd(rowItem: any, field: any) {
@@ -169,6 +93,9 @@ export class MailAdvanceFormComponent implements OnInit {
   ouvierAll:any[]=[];
   clientAll:any[]=[];
   getUser(){
+    this.userAll = [];
+    this.ouvierAll = [];
+    this.clientAll = [];
     this.listDataService.getListAllData("list.php","users").subscribe((data:any)=>{
       data.response.data.forEach((element:any) => {
 
@@ -181,7 +108,7 @@ export class MailAdvanceFormComponent implements OnInit {
         }
         this.userAll.push(element);
       });
-      console.log(this.userAll);
+      //console.log(this.userAll);
     },error=>{
 
     },()=>{
@@ -194,9 +121,15 @@ export class MailAdvanceFormComponent implements OnInit {
     //   this.listData = res.pageList;
     //   this.pager.total = res.total;
     // });
-
+    this.OuvrierOptions = [];
     this.busy = this.listDataService.getListAllData("list.php","mission").subscribe((res:any) => {
         res.response.data.forEach((element:any) => {
+          const format = 'dd/MM/yyyy';
+          const locale = 'en-US';
+          var date = element.createdat.split(" ")[0]
+          const formattedDate = formatDate(date, format, locale);
+          element.createdat=formattedDate;
+
           if(element.state !=="initier"){
             var ouvrier = this.ouvierAll.find((item:any)=>{
               return item.id.toString() == element.idouvrier;
@@ -207,50 +140,127 @@ export class MailAdvanceFormComponent implements OnInit {
           }else if(element.state =="initier"){
             element.ouvriernom = "Aucun"
           }
-          var client = this.clientAll.find((item:any)=>{
-            return item.id.toString() == element.idclient;
-          });
-          if(client){
-            element.clientnom = client.nomprenom
-            element.clientcontact = client.contact
-          }
-          if(element.datefinmission == "null"){
-            element.datefinmission = "aucun"
-          }
-          if(element.datedebutmission == "null"){
-            element.datedebutmission = "aucun"
+          if(element.idclient =="administrateur"){
+            element.clientnom = element.idclient
+          }else{
+            var client = this.clientAll.find((item:any)=>{
+              return item.id.toString() == element.idclient;
+            });
+            if(client){
+              element.clientnom = client.nomprenom
+              element.clientcontact = client.contact
+            }
           }
 
+          if(element.datefinmission.toString() == "null"){
+            element.datefinmission = "Aucun"
+          }
+          if(element.datedebutmission.toString() == "null"){
+            element.datedebutmission = "Aucun"
+          }
+            //labelStyle]="rowItem?.priority"
+
           if(element.state =="initier"){
-            element.priority = "High";
+             element.priority = "red";
           }else if(element.state =="en cours"){
-            element.priority = "Low";
+             element.priority = "green";
           }else if(element.state == "terminer"){
-            element.priority = "Medium";
+             element.priority = "mediumvioletred";
+          }else if(element.state == "accepter"){
+             element.priority = "orange";
           }
       });
       this.ouvierAll.forEach((ouvrier:any)=>{
        var ou =  res.response.data.filter((mission:any) => {
-          return mission.idouvrier == ouvrier.id.toString()&&(mission.state=="en cours")
+          return mission.idouvrier == ouvrier.id.toString()&&(mission.state=="en cours"||mission.state=="accepter")
         })
 
         if(ou.length == 0){
           this.OuvrierOptions.push(ouvrier);
         }
 
-
       })
 
       //console.log("ouvrier libre",this.OuvrierOptions);
       res.pageList = res.response.data.slice(this.pager.pageSize! * (this.pager.pageIndex! - 1), this.pager.pageSize! * this.pager.pageIndex!)
+      res.pageList.reverse();
       res.pageList.$expandConfig = { expand: false };
       res.total = res.response.data.length;
       this.listData = res.pageList;
       this.pager.total = res.total;
-      console.log(res);
+      this.CreateAddMission();
+      // if(this.listData.length==0){
+      //   var rep = {
+      //     "createdat": "2023-03-26"
+      //   };
+      //   this.listData.push(rep);
+      // }
     });
   }
-
+  isEmpty:Boolean = false;
+  CreateAddMission(){
+    this.formConfig = {
+      layout: FormLayout.Horizontal,
+      labelSize: 'sm',
+      items: [
+        {
+          label: 'Objet',
+          prop:  'objet',
+          fonction:"text",
+          type: 'input',
+          required: true,
+          rule: {
+            validators: [{ required: true }],
+          },
+        },
+        {
+          label: 'Message',
+          prop: 'message',
+          fonction:"text",
+          type: 'input',
+          required: true,
+          rule: {
+            validators: [{ required: true }],
+          },
+        },
+        {
+          label: 'Date debut',
+          prop: 'datebegin',
+          type: 'datePicker',
+          fonction:"date",
+          required: true,
+          rule: {
+            validators: [{ required: true }],
+          },
+        },
+        {
+          label: 'Date fin',
+          prop: 'datefin',
+          type: 'datePicker',
+          fonction:"date2",
+          required: true,
+          rule: {
+            validators: [{ required: true }],
+          },
+        },
+        {
+          label: "Ouvrier",
+          prop: 'ouvrier',
+          type: 'select',
+          options: this.OuvrierOptions,
+          required: true,
+          rule: {
+            validators: [{ required: true }],
+          },
+        },
+        // {
+        //   label: 'Timeline',
+        //   prop: 'timeline',
+        //   type: 'datePicker',
+        // },
+      ],
+    };
+  }
 
 
   beforeEditStart = (rowItem: any, field: any) => {
@@ -320,17 +330,16 @@ export class MailAdvanceFormComponent implements OnInit {
       this.datebegin = today
       this.missionAction = objet;
       this.accepteMission = true;
-      console.log(action);
+      //console.log(action);
     }
   }
 
   Retour(){
     this.accepteMission = false;
-
   }
   Action(objet:any,action:any,etat:any){
     if(action =="accepter"){
-      console.log(action);
+      //console.log(action);
     }
   }
 
@@ -352,6 +361,43 @@ export class MailAdvanceFormComponent implements OnInit {
           handler: () => {
             //this.listData.splice(index, 1);
             results.modalInstance.hide();
+          },
+        },
+        {
+          id: 'btn-cancel',
+          cssClass: 'common',
+          text: 'Cancel',
+          handler: () => {
+            results.modalInstance.hide();
+          },
+        },
+      ],
+    });
+  }
+
+  Alert(data: any,state:string) {
+    var mot = "";
+    if(state ==="en cours"){
+      mot = "debuté"
+    }else if(state ==="terminer"){
+      mot = "terminé"
+    }
+    const results = this.dialogService.open({
+      id: 'delete-dialog',
+      width: '346px',
+      maxHeight: '600px',
+      title: 'Alerte',
+      showAnimate: false,
+      content:"Voulez-vous vraiment "+mot+" la mission ?",
+      backdropCloseable: true,
+      onClose: () => {},
+      buttons: [
+        {
+          cssClass: 'primary',
+          text: 'Ok',
+          disabled: false,
+          handler: () => {
+            this.UpdateMission(data,state,results)
           },
         },
         {
@@ -435,9 +481,45 @@ export class MailAdvanceFormComponent implements OnInit {
     // Returned by the simulated backend interface
     return of(message).pipe(delay(300));
   }
+  UpdateMission(rowItem:any,state:string,results:any){
+
+    console.log(rowItem);
+
+    var body = {
+      idmission:rowItem.id,
+      state:state
+    }
+    results.modalInstance.hide();
+    this.listDataService.addData("update_state.php","mission",body).subscribe((data:any)=>{
+      console.log(data);
+      if(data.response.statutCode==200){
+        this.getUser();
+        results.modalInstance.hide();
+      }
+     })
+  }
 
   submitProjectForm({ valid, directive, data, errors }: any) {
     if (valid) {
+      // console.log(this.datebegin,this.datefin,this.ouvrier,this.missionAction)
+      const format = 'dd/MM/yyyy';
+      const locale = 'en-US';
+      const formattedDateBegin = formatDate(this.datebegin, format, locale);
+      const formattedDateFin = formatDate(this.datefin, format, locale);
+      var body = {
+        idmission:this.missionAction.id,
+        idouvrier:this.ouvrier.id,
+        datedebutmission:formattedDateBegin,
+        datefinmission:formattedDateFin,
+        state:"accepter"
+      }
+       this.listDataService.addData("update.php","mission",body).subscribe((data:any)=>{
+        if(data.response.statutCode==200){
+          this.ouvrier = '';
+          this.accepteMission = false;
+          this.getUser();
+        }
+       })
       // do something
     } else {
       // error tip

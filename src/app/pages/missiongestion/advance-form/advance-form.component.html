@@ -17,6 +17,7 @@
   </div>
  <!-- you car write destion here  <div>description</div>-->
 </div>
+
 <div *ngIf="!accepteMission" class="da-content-wrapper">
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
@@ -27,12 +28,12 @@
               <tr dTableRow>
                 <th dHeadCell>Objet de mission</th>
                 <th dHeadCell>Message</th>
-                <th dHeadCell>Debut mission </th>
-                <th dHeadCell>Fin mission</th>
+                <th dHeadCell>Début</th>
+                <th dHeadCell>Fin</th>
                 <th dHeadCell>Ouvrier</th>
-                <th dHeadCell>Client</th>
+                <th dHeadCell>initiateur</th>
                 <th dHeadCell>Statut</th>
-                <th dHeadCell>Date de creation</th>
+                <th dHeadCell>Initier le</th>
                 <th dHeadCell>Actions</th>
               </tr>
             </thead>
@@ -53,7 +54,7 @@
                         [formConfig]="formConfig"
                         [formData]="defaultRowData"
                         [typeform]="typeformulaire"
-                        class="editable-row"
+                         class="editable-row"
                         (submitted)="quickRowAdded($event)"
                         (canceled)="quickRowCancel()"
                       ></da-adduser-form>
@@ -221,8 +222,10 @@
               >
                 <span  *ngIf="!rowItem['iterationEdit']">
                   <d-tag
+                  style="width: 64.5px;"
+                  [customColor]="rowItem?.priority"
                   [tag]="rowItem?.state"
-                  [labelStyle]="rowItem?.priority">
+                  >
                 </d-tag>
                 </span>
                 <div
@@ -237,6 +240,7 @@
                 </div>
               </td>
                   <td
+                    style="padding: 11px 17px 9px;"
                     dTableCell
                     [editable]="false"
                     [editableTip]="editableTip"
@@ -246,9 +250,9 @@
                     [beforeEditStart]="beforeEditStart"
                     [beforeEditEnd]="beforeEditEnd"
                   >
-                    <span *ngIf="!rowItem['statusEdit']"
-                      ><span>{{rowItem?.createdat.split(" ")[0]}}</span></span
-                    >
+                    <span  *ngIf="!rowItem['statusEdit']">
+                      <span>{{rowItem?.createdat}}</span>
+                    </span>
                     <div *ngIf="rowItem['statusEdit']" class="edit-padding-fix">
                       <d-select
                         name="status"
@@ -260,21 +264,31 @@
 
                   <td>
                     <span *ngIf="rowItem.state=='initier'">
-                       <button  (click)="openView(rowItem,'accepter','en cours')"    style="background: rgb(21, 189, 97); color:rgb(255, 255, 255); width:60px; border-radius: var(--devui-border-radius, 2px);"   >
-                        Accepter
+                       <button  (click)="openView(rowItem,'accepter','en cours')"    style="background: rgb(21, 189, 97); color:rgb(255, 255, 255); width:110px; border-radius: var(--devui-border-radius, 2px);"   >
+                        Accepter la mission
                        </button>
                     </span>
-                    <span *ngIf="rowItem.state!=='initier'">
-                      <button   style="background: rgb(21, 189, 97); color:rgb(255, 255, 255); width:60px; border-radius: var(--devui-border-radius, 2px);"   >
-
+                    <span *ngIf="rowItem.state=='accepter'">
+                      <button  (click)="Alert(rowItem,'en cours')"    style="background: rgb(21, 167, 189); color:rgb(255, 255, 255); width:110px; border-radius: var(--devui-border-radius, 2px);"   >
+                       Debuter la mission
                       </button>
                    </span>
+
+                   <span *ngIf="rowItem.state=='en cours'">
+                    <button  (click)="Alert(rowItem,'terminer')"    style="background: rgb(129, 161, 12); color:rgb(255, 255, 255); width:110px; border-radius: var(--devui-border-radius, 2px);"   >
+                     Terminer la mission
+                    </button>
+                  </span>
+                  <span *ngIf="rowItem.state=='terminer'" >
+                    <button    style="background: rgb(4, 56, 48); color:rgb(255, 255, 255); width:110px; border-radius: var(--devui-border-radius, 2px);"   >
+                      Mission terminée
+                    </button>
+                  </span>
                     <d-button
                       icon="icon-delete"
                       bsStyle="text-dark"
                       title="delete"
-                      (click)="deleteRow(rowIndex)"
-                    ></d-button>
+                      (click)="deleteRow(rowIndex)"></d-button>
                   </td>
                 </tr>
               </ng-template>
@@ -298,6 +312,7 @@
     </da-col-item>
   </da-layout-row>
 </div>
+
 
 <div *ngIf="accepteMission" class="da-content-wrapper">
   <da-layout-row [daGutter]="[24, 24]">
@@ -339,7 +354,6 @@
             <d-form-label [required]="true" [hasHelp]="true" [helpTips]="'Celui qui doit faire la mission'">Ouvrier</d-form-label>
             <d-form-control>
               <d-select
-
                 [options]="OuvrierOptions"
                 [(ngModel)]="ouvrier"
                 [name]="'ouvrier'"
@@ -359,7 +373,6 @@
             <d-form-control>
               <div class="devui-input-group devui-dropdown-origin">
                 <input
-                  [disabled]="disabled"
                   class="devui-input devui-form-control"
                   placeholder="y/MM/dd"
                   (click)="datePicker1.toggle()"
@@ -367,6 +380,7 @@
                   [(ngModel)]="datebegin"
                   autocomplete="off"
                   dDatepicker
+                  [minDate]="datebegin"
                   appendToBody
                   #datePicker1="datepicker"
                   [dValidateRules]="[{ required: true }]">
@@ -391,8 +405,9 @@
                   placeholder="dd/MM/y"
                   (click)="datePicker2.toggle()"
                   name="datefin"
+                  [minDate]="datebegin"
                   [(ngModel)]="datefin"
-                  locale = "fr"
+                  locale="fr-fra"
                   autocomplete="off"
                   dDatepicker
                   appendToBody

@@ -15,6 +15,7 @@
         *ngIf="item.type === 'select'"
         [appendToBody]="true"
         [options]="item.options"
+        [filterKey]="'nomprenom'"
         [name]="item.prop"
         [(ngModel)]="_formData[item.prop]"
         [dValidateRules]="item.required ? item.rule : []">
@@ -23,6 +24,8 @@
         <input
           class="devui-input devui-form-control"
           placeholder="y/MM/dd"
+          [minDate]="_formData[item.prop]"
+          (ngModelChange)="change($event,item)"
           (click)="datePicker1.toggle()"
           [name]="item.prop"
           [(ngModel)]="_formData[item.prop]"
