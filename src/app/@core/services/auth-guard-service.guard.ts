@@ -22,12 +22,13 @@ export class AuthGuardService implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.authService.isUserLoggedIn()) {
       this.i18nValues = this.translate.instant('authNotice');
+      console.log(this.i18nValues);
       this.toastService.open({
         value: [
           {
             severity: 'info',
-            summary: this.i18nValues['summary'],
-            content: this.i18nValues['content'],
+            summary: "Accès refusé",
+            content: "Connectez-vous s'il vous plaît.",
           },
         ],
         life: 2000,

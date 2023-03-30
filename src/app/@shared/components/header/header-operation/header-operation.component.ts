@@ -34,6 +34,8 @@ export class HeaderOperationComponent implements OnInit {
       // });
     }
     this.language = this.translate.currentLang;
+
+    this.onLanguageClick("en-us")
   }
 
   onSearch(event: any) {
@@ -41,7 +43,8 @@ export class HeaderOperationComponent implements OnInit {
   }
 
   onLanguageClick(language: string) {
-    this.language = language;
+    console.log(language);
+    this.language = "en-us";
     localStorage.setItem('lang', this.language);
     this.i18n.toggleLang(this.language);
     this.translate.use(this.language);

@@ -13,7 +13,7 @@ const routes: Routes = [
       { path: 'analysis', component: AnalysisComponent },
       { path: 'monitor', component: MonitorComponent },
       { path: 'workspace', component: WorkSpaceComponent },
-      { path: '', redirectTo: 'analysis', pathMatch: 'full' },
+      { path: '', redirectTo: 'monitor', pathMatch: 'full' },
     ],
   },
 ];

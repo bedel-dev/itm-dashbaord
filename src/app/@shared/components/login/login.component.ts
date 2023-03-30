@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   showPassword = false;
 
   tabItems: any;
-  language: string;
+  language!: string;
   i18nValues: any;
   toastMessage: any;
   languages = LANGUAGES;
@@ -40,24 +40,25 @@ export class LoginComponent implements OnInit {
   };
 
   formRules: { [key: string]: DValidateRules } = {
-    usernameRules: {
-      validators: [
-        { required: true },
-        { minlength: 4 },
-        { maxlength: 20 },
-        {
-          pattern: /^[a-zA-Z0-9]+(\s+[a-zA-Z0-9]+)*$/,
-          message: 'The user name cannot contain characters except uppercase and lowercase letters.',
-        },
-      ],
-    },
-    emailRules: {
-      validators: [{ required: true }, { email: true }],
-    },
-    passwordRules: {
-      validators: [{ required: true }, { minlength: 4 }, { maxlength: 15 }, { pattern: /^[a-zA-Z0-9\d@$!%*?&.]+(\s+[a-zA-Z0-9]+)*$/ }],
-      message: 'Enter a password that contains 6 to 15 digits and letters.',
-    },
+    // usernameRules: {
+    //   validators: [
+    //     { required: true },
+    //     // { minlength: 4 },
+    //     // { maxlength: 20 },
+    //     {
+    //       pattern: /^[a-zA-Z0-9]+(\s+[a-zA-Z0-9]+)*$/,
+    //       message: "le nom d'utilisateur ne pas contenir d'espace",
+    //     },
+    //   ],
+    // },
+    // emailRules: {
+    //   validators: [{ required: true }, { email: true }],
+    //  },
+    // passwordRules: {
+    //   validators: [{ required: true }, { minlength: 4 }, { maxlength: 15 }, { pattern: /^[a-zA-Z0-9\d@$!%*?&.]+(\s+[a-zA-Z0-9]+)*$/ }],
+    //   message: 'Entrez un mot de passe qui a plus de 4',
+    // },
+
   };
 
 
@@ -74,7 +75,7 @@ export class LoginComponent implements OnInit {
     private i18n: I18nService,
     private personalizeService: PersonalizeService
   ) {
-    this.language = this.translate.currentLang;
+    //this.language = this.translate.currentLang;
   }
 
   ngOnInit(): void {
@@ -200,6 +201,7 @@ export class LoginComponent implements OnInit {
 
   onKeyUp(e: KeyboardEvent, tabId: string | number) {
     if (e.keyCode === 13) {
+
       this.onClick(tabId);
     }
   }
