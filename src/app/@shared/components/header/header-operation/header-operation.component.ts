@@ -6,6 +6,7 @@ import { LANGUAGES } from 'src/config/language-config';
 import { User } from '../../../models/user';
 import { I18nService } from 'ng-devui/i18n';
 import { ListDataService } from 'src/app/@core/mock/list-data.service';
+import { ToastService } from 'ng-devui';
 
 @Component({
   selector: 'da-header-operation',
@@ -19,7 +20,7 @@ export class HeaderOperationComponent implements OnInit {
   haveLoggedIn = false;
   noticeCount!: number;
 
-  constructor(private listDataService: ListDataService,private route: Router, private authService: AuthService, private translate: TranslateService, private i18n: I18nService) {}
+  constructor(private router: Router,private toastService: ToastService,private listDataService: ListDataService,private route: Router, private authService: AuthService, private translate: TranslateService, private i18n: I18nService) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('userinfo')) {
@@ -52,9 +53,23 @@ export class HeaderOperationComponent implements OnInit {
             return n.id.toString()==element.id.toString()
           })
           if(notif.length==0){
+            this.toastService.open({
+              value: [
+                {
+                  severity: 'info',
+                  summary: "Notications",
+                  content: "Une nouvelle mission initiée...",
+                },
+              ],
+              life: 2000,
+            });
             this.AllNotification.push(element)
           }
           //console.log(notif)
+        }else if(element.state =="lu"){
+          this.AllNotification = this.AllNotification.filter((n:any) =>{
+            return n.id.toString() !== element.id.toString()
+          })
         }
        });
        //console.log("notif",notification.response.data)
@@ -69,13 +84,37 @@ export class HeaderOperationComponent implements OnInit {
           this.AllNotification.push(element)
         }
        });
-       console.log("notif",notification.response.data)
+       //console.log("notif",notification.response.data)
     })
   }
   onSearch(event: any) {
     console.log(event);
   }
+  ViewAllMission(){
 
+    var niveau = this.AllNotification.length;
+
+    this.AllNotification.forEach((notif:any)=>{
+      var body = {
+        idnotif:notif.id.toString(),
+        state:"lu"
+      }
+      this.listDataService.addData("update.php","notif",body).subscribe((response:any)=>{
+        if(response.response.data=="notification updated"){
+          niveau = niveau-1
+        }
+        console.log(response.response.data,niveau)
+        if(niveau==0){
+          this.router.navigate(['/pages/missiongestion/advanced-form']);
+        }
+      })
+
+    })
+
+
+
+
+  }
   onLanguageClick(language: string) {
     console.log(language);
     this.language = "en-us";
@@ -98,6 +137,7 @@ export class HeaderOperationComponent implements OnInit {
   }
 
   handleNoticeCount(event: number) {
+    //console.log("no",event);
     this.noticeCount = event;
   }
 }

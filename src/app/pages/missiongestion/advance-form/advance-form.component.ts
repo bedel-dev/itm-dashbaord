@@ -86,6 +86,9 @@ export class MailAdvanceFormComponent implements OnInit {
 
   }
 
+  RefreshList() {
+    this.getUser();
+  }
   onEditEnd(rowItem: any, field: any) {
     rowItem[field] = false;
   }

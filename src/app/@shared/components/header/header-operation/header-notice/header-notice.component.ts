@@ -49,9 +49,9 @@ export class HeaderNoticeComponent implements OnInit {
       .subscribe(() => {
         this.i18nValues = this.translate.instant('notice');
         this.tabTitles = {
-          notice: this.i18nValues['notificationTabName'],
-          message: this.i18nValues['messageTabName'],
-          todo: this.i18nValues['todoTabName'],
+          notice: "Nofication",
+          message: "nouvelle mission",
+          todo: "nouvelle mission",
         };
       });
 

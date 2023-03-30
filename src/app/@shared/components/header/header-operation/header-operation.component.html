@@ -3,12 +3,14 @@
   <!--<a href="https://devui.design/admin-page/docs" target="_blank">
     <i class="icon icon-helping"></i>
   </a>-->
-  <div class="da-operations-notice" dDropDown [trigger]="'click'" dDropDownToggle appendToBody [closeScope]="'blank'">
+  <div (click)="ViewAllMission()" class="da-operations-notice" dDropDown [trigger]="'click'" dDropDownToggle appendToBody [closeScope]="'blank'">
     <d-badge [count]="AllNotification.length">
       <i class="icon icon-notice"></i>
     </d-badge>
     <div class="da-notice-modal" dDropDownMenu role="menu">
+      <!--
       <da-header-notice (countEvent)="handleNoticeCount($event)"></da-header-notice>
+      -->
     </div>
   </div>
 
