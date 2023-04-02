@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'pages',
-    pathMatch: 'full',
+    pathMatch:  'full',
   },
   {
     path: '**',
@@ -31,7 +31,7 @@ const routes: Routes = [
 ];
 //{useHash:true}
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash:true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

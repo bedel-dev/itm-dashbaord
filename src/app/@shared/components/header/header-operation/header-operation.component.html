@@ -20,13 +20,14 @@
     <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu" style="min-width: 120px">
       <ng-container *ngIf="haveLoggedIn; else login">
         <li role="menuitem">
-          <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'center']">
+          <a class="devui-dropdown-item" >
             <i class="icon icon-mine">
             </i>
-            {{user.nomprenom}}
+             {{user.nomprenom}}
           </a>
         </li>
         <!--
+          [routerLink]="['/pages', 'user', 'center']"
         <li role="menuitem">
           <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'settings']"
             ><i class="icon icon-setting"></i>{{ 'header.userSettings' | translate }}</a

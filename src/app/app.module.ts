@@ -9,6 +9,7 @@ import { CoreModule } from './@core/core.module';
 import { SharedModule } from './@shared/shared.module';
 import { Observable, of } from 'rxjs';
 import { I18N } from '../config/language-config';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 class I18NLoader implements TranslateLoader {
   getTranslation(lang: 'zh-cn' | 'en-us'): Observable<Object> {
@@ -32,7 +33,9 @@ class I18NLoader implements TranslateLoader {
       },
     }),
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [
+    {provide : LocationStrategy , useClass: HashLocationStrategy}
+  ],
+  bootstrap: [AppComponent,],
 })
 export class AppModule {}
