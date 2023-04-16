@@ -47,31 +47,34 @@ export class HeaderOperationComponent implements OnInit {
 
   getNewnotification(){
     this.listDataService.getListAllData("list.php","notif").subscribe((notification:any)=>{
-       notification.response.data.forEach((element:any) => {
-        if(element.state =="non lu"){
-          var notif =   this.AllNotification.filter((n:any)=>{
-            return n.id.toString()==element.id.toString()
-          })
-          if(notif.length==0){
-            this.toastService.open({
-              value: [
-                {
-                  severity: 'info',
-                  summary: "Notications",
-                  content: "Une nouvelle mission initiée...",
-                },
-              ],
-              life: 2000,
-            });
-            this.AllNotification.push(element)
+      if(notification.response.data !== "Aucune notification trouvé"){
+        notification.response.data.forEach((element:any) => {
+          if(element.state =="non lu"||element.state =="showed"){
+            var notif =   this.AllNotification.filter((n:any)=>{
+              return n.id.toString()==element.id.toString()
+            })
+            if(notif.length==0){
+              this.toastService.open({
+                value: [
+                  {
+                    severity: 'info',
+                    summary: "Notications",
+                    content: "Une nouvelle mission initiée...",
+                  },
+                ],
+                life: 2000,
+              });
+              this.AllNotification.push(element)
+            }
+            //console.log(notif)
+          }else if(element.state =="lu"){
+            this.AllNotification = this.AllNotification.filter((n:any) =>{
+              return n.id.toString() !== element.id.toString()
+            })
           }
-          //console.log(notif)
-        }else if(element.state =="lu"){
-          this.AllNotification = this.AllNotification.filter((n:any) =>{
-            return n.id.toString() !== element.id.toString()
-          })
-        }
-       });
+         });
+      }
+
        //console.log("notif",notification.response.data)
     })
   }
@@ -79,11 +82,14 @@ export class HeaderOperationComponent implements OnInit {
   getAllNotification(){
     this.AllNotification = [];
     this.listDataService.getListAllData("list.php","notif").subscribe((notification:any)=>{
-       notification.response.data.forEach((element:any) => {
-        if(element.state =="non lu"){
-          this.AllNotification.push(element)
-        }
-       });
+      console.log(notification.response.data)
+      if(notification.response.data !== "Aucune notification trouvé"){
+          notification.response.data.forEach((element:any) => {
+          if(element.state =="non lu"||element.state =="showed"){
+            this.AllNotification.push(element)
+          }
+         });
+      }
        //console.log("notif",notification.response.data)
     })
   }
@@ -95,20 +101,26 @@ export class HeaderOperationComponent implements OnInit {
     var niveau = this.AllNotification.length;
 
     this.AllNotification.forEach((notif:any)=>{
+
+      var userconnected = JSON.parse(localStorage.getItem("userinfo")!);
       var body = {
         idnotif:notif.id.toString(),
         state:"lu"
       }
-      this.listDataService.addData("update.php","notif",body).subscribe((response:any)=>{
-        if(response.response.data=="notification updated"){
-          niveau = niveau-1
-        }
-        console.log(response.response.data,niveau)
-        if(niveau==0){
-          this.router.navigate(['/pages/missiongestion/advanced-form']);
-        }
-      })
-
+      console.log(userconnected);
+      if(userconnected.id== notif.iduser){
+        this.listDataService.addData("update.php","notif",body).subscribe((response:any)=>{
+          if(response.response.data=="notification updated"){
+            niveau = niveau-1
+          }
+          console.log(response.response.data,niveau)
+          if(niveau==0){
+            this.router.navigate(['/pages/missiongestion/advanced-form']);
+          }
+        })
+      }else{
+        this.router.navigate(['/pages/missiongestion/advanced-form']);
+      }
     })
 
 

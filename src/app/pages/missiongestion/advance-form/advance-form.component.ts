@@ -131,6 +131,9 @@ export class MailAdvanceFormComponent implements OnInit {
     // });
     this.OuvrierOptions = [];
     this.busy = this.listDataService.getListAllData("list.php","mission").subscribe((res:any) => {
+      console.log(res);
+      if(res.response.data !== "Aucun utilisateur trouvé"){
+
         res.response.data.forEach((element:any) => {
           const format = 'dd/MM/yyyy';
           const locale = 'en-US';
@@ -187,6 +190,8 @@ export class MailAdvanceFormComponent implements OnInit {
           this.OuvrierOptions.push(ouvrier);
         }
 
+
+
       })
 
       //console.log("ouvrier libre",this.OuvrierOptions);
@@ -203,6 +208,11 @@ export class MailAdvanceFormComponent implements OnInit {
       //   };
       //   this.listData.push(rep);
       // }
+
+
+
+
+      }
     });
   }
   isEmpty:Boolean = false;
@@ -304,9 +314,19 @@ export class MailAdvanceFormComponent implements OnInit {
   }
 
   quickRowAdded(e: any) {
-    const newData = { ...e };
-    this.listData.unshift(newData);
+    this.RefreshList();
     this.headerNewForm = false;
+    // const newData = { ...e };
+    // this.listData.unshift(newData);
+    // this.headerNewForm = false;
+  }
+
+  Actualise(e: any)     {
+    //const d = { ...e };
+    console.log("console :",e);
+    if(e==true){
+
+    }
   }
 
   quickRowCancel() {

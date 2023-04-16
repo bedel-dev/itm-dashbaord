@@ -72,6 +72,7 @@
                         [formData]="defaultRowData"
                         [typeform]="typeformulaire"
                          class="editable-row"
+                         (responseBack) ="Actualise($event)"
                         (submitted)="quickRowAdded($event)"
                         (canceled)="quickRowCancel()"
                       ></da-adduser-form>
@@ -268,11 +269,6 @@
                     [beforeEditEnd]="beforeEditEnd"
                   >
                     <span *ngIf="!rowItem['iterationEdit']">
-                      <d-avatar
-                      [name]="rowItem.adresse"
-                      [width]="24"
-                      [height]="24"
-                    ></d-avatar>
                       {{
                       rowItem?.adresse
                     }}</span>

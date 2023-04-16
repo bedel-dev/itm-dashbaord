@@ -11,6 +11,9 @@ import { FormConfig } from 'src/app/@shared/components/admin-form';
   styleUrls: ['./advance-form.component.scss'],
 })
 export class MailAdvanceFormComponent implements OnInit {
+  static RefreshList() {
+    throw new Error('Method not implemented.');
+  }
   editableTip = EditableTip.btn;
   nameEditing!: boolean;
   busy!: Subscription;

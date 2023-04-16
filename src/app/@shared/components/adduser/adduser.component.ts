@@ -3,6 +3,7 @@ import { DialogService, FormLayout } from 'ng-devui';
 import { FormConfig } from './adduser.type';
 import { ListDataService } from 'src/app/@core/mock/list-data.service';
 import { formatDate } from '@angular/common';
+import { MailAdvanceFormComponent } from 'src/app/pages/mailgestion/advance-form/advance-form.component';
 
 @Component({
   selector: 'da-adduser-form',
@@ -27,6 +28,8 @@ export class AddUserComponent implements OnInit {
   @Output() submitted = new EventEmitter();
 
   @Output() canceled = new EventEmitter();
+
+  @Output() responseBack = new EventEmitter();
 
   constructor(private listDataService: ListDataService, private dialogService: DialogService) {}
   change(data:any,item:any){
@@ -137,6 +140,8 @@ export class AddUserComponent implements OnInit {
     }
     this.listDataService.addData("add.php","notif",body).subscribe((notif:any)=>{
       console.log(notif)
+      this.responseBack.emit(true);
+      //MailAdvanceFormComponent.RefreshList()
     })
   }
   AddMissionFuction(data:any){
