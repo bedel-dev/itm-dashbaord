@@ -212,6 +212,10 @@ export class MailAdvanceFormComponent implements OnInit {
 
 
 
+      }else{
+        console.log("Ouvrier");
+        this.headerNewForm = true;
+        console.log(this.headerNewForm);
       }
     });
   }

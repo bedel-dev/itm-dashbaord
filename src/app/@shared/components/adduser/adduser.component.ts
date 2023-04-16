@@ -73,6 +73,7 @@ export class AddUserComponent implements OnInit {
       this.MadaleInfo("Les deux passwords ne sont pas identiquent")
     }
   }
+
   MadaleInfo(msg: string) {
     const results = this.dialogService.open({
       id: 'delete-dialog',

@@ -48,8 +48,10 @@ export class HeaderOperationComponent implements OnInit {
   getNewnotification(){
     this.listDataService.getListAllData("list.php","notif").subscribe((notification:any)=>{
       if(notification.response.data !== "Aucune notification trouvé"){
+        var userconnected = JSON.parse(localStorage.getItem("userinfo")!);
+
         notification.response.data.forEach((element:any) => {
-          if(element.state =="non lu"||element.state =="showed"){
+          if((element.state == "non lu" || element.state == "showed") && (element.iduser == userconnected.id||element.iduser == "administrateur")){
             var notif =   this.AllNotification.filter((n:any)=>{
               return n.id.toString()==element.id.toString()
             })
@@ -80,12 +82,16 @@ export class HeaderOperationComponent implements OnInit {
   }
   AllNotification:any[]=[];
   getAllNotification(){
+    var userconnected = JSON.parse(localStorage.getItem("userinfo")!);
+
     this.AllNotification = [];
     this.listDataService.getListAllData("list.php","notif").subscribe((notification:any)=>{
       console.log(notification.response.data)
       if(notification.response.data !== "Aucune notification trouvé"){
+
           notification.response.data.forEach((element:any) => {
-          if(element.state =="non lu"||element.state =="showed"){
+          if((element.state == "non lu" || element.state == "showed") && (element.iduser == userconnected.id||element.iduser == "administrateur"))
+          {
             this.AllNotification.push(element)
           }
          });
@@ -107,8 +113,9 @@ export class HeaderOperationComponent implements OnInit {
         idnotif:notif.id.toString(),
         state:"lu"
       }
-      console.log(userconnected);
-      if(userconnected.id== notif.iduser){
+      console.log(userconnected,notif.iduser);
+
+      if(userconnected.id== notif.iduser || notif.iduser == "administrateur"){
         this.listDataService.addData("update.php","notif",body).subscribe((response:any)=>{
           if(response.response.data=="notification updated"){
             niveau = niveau-1
