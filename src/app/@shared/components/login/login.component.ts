@@ -77,7 +77,15 @@ export class LoginComponent implements OnInit {
   ) {
     //this.language = this.translate.currentLang;
   }
+  //changeView
+  forgetpass:boolean = false;
+  Checkmail(){
 
+  }
+
+  Changepass(){
+    this.router.navigateByUrl('/resetPassword')
+  }
   ngOnInit(): void {
     this.translate
       .get('loginPage')

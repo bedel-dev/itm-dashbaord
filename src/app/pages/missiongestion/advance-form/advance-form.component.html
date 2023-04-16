@@ -49,6 +49,7 @@
                 <th dHeadCell>Ouvrier</th>
                 <th dHeadCell>initiateur</th>
                 <th dHeadCell>Statut</th>
+                <th dHeadCell>Adresse</th>
                 <th dHeadCell>Initier le</th>
                 <th dHeadCell>Actions</th>
               </tr>
@@ -235,7 +236,7 @@
                 [field]="'iteration'"
                 [beforeEditStart]="beforeEditStart"
                 [beforeEditEnd]="beforeEditEnd"
-              >
+               >
                 <span  *ngIf="!rowItem['iterationEdit']">
                   <d-tag
                   style="width: 64.5px;"
@@ -255,6 +256,37 @@
                   />
                 </div>
               </td>
+
+                  <td
+                    dTableCell
+                    [editable]="false"
+                    [editableTip]="editableTip"
+                    [(editing)]="rowItem['iterationEdit']"
+                    [rowItem]="rowItem"
+                    [field]="'iteration'"
+                    [beforeEditStart]="beforeEditStart"
+                    [beforeEditEnd]="beforeEditEnd"
+                  >
+                    <span *ngIf="!rowItem['iterationEdit']">
+                      <d-avatar
+                      [name]="rowItem.adresse"
+                      [width]="24"
+                      [height]="24"
+                    ></d-avatar>
+                      {{
+                      rowItem?.adresse
+                    }}</span>
+                    <div
+                      *ngIf="rowItem['iterationEdit']"
+                      class="edit-padding-fix"
+                    >
+                      <input
+                        dTextInput
+                        size="sm"
+                        [(ngModel)]="rowItem.iteration"
+                      />
+                    </div>
+                  </td>
                   <td
                     style="padding: 11px 17px 9px;"
                     dTableCell

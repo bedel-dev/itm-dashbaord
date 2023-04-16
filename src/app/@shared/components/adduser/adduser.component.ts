@@ -127,6 +127,18 @@ export class AddUserComponent implements OnInit {
       //this.getList();
     })
   }
+
+  AddNotification(iduser:string){
+    var body = {
+      "iduser": iduser,
+      "idmission": "null",
+      "message": "Une nouvelle mission vous a été attribué par votre administrateur",
+      "state": "non lu"
+    }
+    this.listDataService.addData("add.php","notif",body).subscribe((notif:any)=>{
+      console.log(notif)
+    })
+  }
   AddMissionFuction(data:any){
 
     console.log(data);
@@ -147,9 +159,11 @@ export class AddUserComponent implements OnInit {
         "motif": data.objet,
         "datefinmission": formattedDatefin,
         "datedebutmission": formattedDatedebut,
+        "adresse":data.adresse
       }
       this.listDataService.addData("add.php","mission",body).subscribe((user:any)=>{
         if(user.response.statutCode == 200){
+
           var ouvrier = this.ouvierAll.find((item:any)=>{
             return item.id.toString() == user.response.data.idouvrier;
           });
@@ -175,6 +189,7 @@ export class AddUserComponent implements OnInit {
          user.response.data.createdat=formattedDate;
 
           this.submitted.emit(user.response.data);
+          this.AddNotification(data.ouvrier.id);
          }else if(user.response.statutCode == 401&&user.response.data =="Contact ou username existe deja"){
           this.MadaleInfo(user.response.data)
          }else{
@@ -192,6 +207,8 @@ export class AddUserComponent implements OnInit {
 
   submitPlanForm({ valid }: { valid: boolean }) {
     if (valid) {
+
+      //console.log(this._formData);
       if(this.typeform == "adduser"){
         this.AddUserFuction(this._formData);
       }else if(this.typeform == "addmission"){

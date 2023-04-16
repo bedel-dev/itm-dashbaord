@@ -66,7 +66,7 @@
   <!--<da-footer></da-footer>-->
 </div>
 
-<ng-template #loginWithPassword>
+<ng-template ngIf="!forgetpass"   #loginWithPassword>
   <form dForm [layout]="horizontalLayout" [labelSize]="'sm'" ngForm (dSubmit)="onClick(tabActiveId)">
     <d-form-item>
       <d-form-label style="flex: 0 0 124px;">Nom d'utilisateur</d-form-label>
@@ -104,7 +104,7 @@
         <span class="da-auto-login-text" style="margin-left: 8px">{{ 'loginPage.autoLogin' | translate }}</span>
       </div>
       -->
-      <span><a href="#">Mot de Passe oublié</a></span>
+      <span><a (click)="Changepass()">Mot de Passe oublié</a></span>
     </div>
     <button style="background-color:#07539e;"  class="da-submit-button" dFormSubmit>
       Connexion
@@ -113,10 +113,7 @@
 </ng-template>
 
 
-
-
-
-<ng-template #loginWithEmail>
+<ng-template  #loginWithEmail>
   <form dForm [layout]="horizontalLayout" [labelSize]="'sm'" ngForm (dSubmit)="onClick(tabActiveId)">
     <d-form-item>
       <d-form-label>{{ 'loginPage.email' | translate }}：</d-form-label>
@@ -153,7 +150,7 @@
         <span class="da-auto-login-text" style="margin-left: 8px">{{ 'loginPage.autoLogin' | translate }}</span>
       </div>
       <span
-        ><a href="#">{{ 'loginPage.forgetPassword' | translate }}</a></span
+        ><a >{{ 'loginPage.forgetPassword' | translate }}</a></span
       >
     </div>
     <button class="da-submit-button" dFormSubmit>
@@ -165,3 +162,5 @@
 <ng-template #suffixTemplate>
   <i [class]="showPassword ? 'icon icon-preview' : 'icon icon-preview-forbidden'" (click)="showPassword = !showPassword"></i>
 </ng-template>
+
+

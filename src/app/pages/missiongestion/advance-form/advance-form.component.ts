@@ -36,6 +36,7 @@ export class MailAdvanceFormComponent implements OnInit {
     datebegin: this.daytoday,
     datefin: this.daytoday,
     ouvrier: 'Choisissez un ouvrier',
+    adresse:""
   };
 
   priorities = ['Low', 'Medium', 'High','Await'];
@@ -71,6 +72,10 @@ export class MailAdvanceFormComponent implements OnInit {
     },
     {
       field: 'date',
+      width: '100px',
+    },
+    {
+      field: 'adresse',
       width: '100px',
     },
     {
@@ -256,6 +261,16 @@ export class MailAdvanceFormComponent implements OnInit {
             validators: [{ required: true }],
           },
         },
+        {
+          label: "Adresse",
+          prop: 'adresse',
+          type: 'input',
+          fonction:"text",
+          required: true,
+          rule: {
+            validators: [{ required: true }],
+          },
+        },
         // {
         //   label: 'Timeline',
         //   prop: 'timeline',
@@ -420,7 +435,8 @@ export class MailAdvanceFormComponent implements OnInit {
   ouvrier:any;
   datebegin:any;
   datefin:any;
-  disabled:boolean = true
+  disabled:boolean = true;
+  adresse:string = " ";
   // projectFormData = {
   //   client: '',
   //   ouvrier: null,

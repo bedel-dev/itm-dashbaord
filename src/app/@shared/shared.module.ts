@@ -44,6 +44,7 @@ import { DaGridModule } from './layouts/da-grid';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
+import { RestPassComponent } from './components/resetpass/resetpass.component';
 
 const DEVUI_MODULES = [
   LayoutModule,
@@ -71,6 +72,7 @@ const DEVUI_MODULES = [
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];
 @NgModule({
   declarations: [
+    RestPassComponent,
     LoginComponent,
     SideSettingsComponent,
     HeaderOperationComponent,

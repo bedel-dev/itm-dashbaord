@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from './@core/services/auth-guard-service.guard';
 import { LoginComponent } from './@shared/components/login/login.component';
 import { RegisterComponent } from './@shared/components/register/register.component';
+import { RestPassComponent } from './@shared/components/resetpass/resetpass.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'resetPassword',
+    component: RestPassComponent,
   },
   {
     path: 'register',
